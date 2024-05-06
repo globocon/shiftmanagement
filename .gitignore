@@ -32,6 +32,8 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+**/bin/Debug/
+**/bin/Release/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -361,22 +363,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/CityWatch.Web/wwwroot/Pdf/FromDropbox
-/CityWatch.Web/wwwroot/Pdf/Output
-/CityWatch.Web/wwwroot/Pdf/ToDropbox/20230817 - IR Report - VISY-Banyule [VR] - OH&S - SN 07009 - v1.0.pdf
-/CityWatch.Kpi/wwwroot/Pdf/Output
-/02_Mstcts_Create_Sequence_SeqNewRequest.sql
-/Unece.MRO/appsettings.json
-/Unece.MRO/appsettings.json
-/Unece.MSTCTS/appsettings.json
-/Unece.MSTCTS/appsettings.json
-/Unece.MSTCTS/appsettings.json
-/Unece.MSTCTS/wwwroot/Uploads/Application/MemberState
-
-/Unece.MRO/appsettings_mi.json
-/Unece.MRO/appsettings.json
-/Unece.MRO/Program.cs
-/Unece.MSTCTS/appsettings.json
 /ShiftManagement.WebPortal/obj/Debug/net6.0/ShiftManagement.WebPortal.csproj.AssemblyReference.cache
 /ShiftManagement.WebPortal/obj/Debug/net6.0/ShiftManagement.WebPortal.AssemblyInfoInputs.cache
 /ShiftManagement.WebPortal/obj/Debug/net6.0/ShiftManagement.WebPortal.AssemblyInfo.cs
@@ -384,3 +370,4 @@ FodyWeavers.xsd
 /ShiftManagement.Data/obj/Debug/net6.0/ShiftManagement.Data.AssemblyInfo.cs
 /ShiftManagement.Common/obj/Debug/net6.0/ShiftManagement.Common.AssemblyInfoInputs.cache
 /ShiftManagement.Common/obj/Debug/net6.0/ShiftManagement.Common.AssemblyInfo.cs
+/ShiftManagement.Data/bin/Debug/net6.0/ShiftManagement.Data.pdb

@@ -61,6 +61,10 @@ namespace ShiftManagement.WebPortal.Services
                 new Claim(ClaimTypes.Role , role)
             };
             claims.Add(new Claim(type: "RoleName", value: dspnm));
+            if(user.ImageExtn != null)
+                claims.Add(new Claim(type: "ImageExtn", value: user.ImageExtn));
+            else
+                claims.Add(new Claim(type: "ImageExtn", value: string.Empty));
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

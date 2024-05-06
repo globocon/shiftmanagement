@@ -131,7 +131,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/vieweditrequests">
+                            <a href="/ShiftAdmin">
                                 <div class="parent-icon">
                                     <i class="bx bx-book-open"></i>
                                 </div>
@@ -295,7 +295,21 @@
                     <div class="user-box dropdown">
                         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                            <img src="~/images/profileimage.jfif" class="user-img" alt="user profile">
+                            @{
+                                var clientimg = "/images/users/Noimage.png";
+                                var ImageExtn = claimsIdentity.Claims.Where(x => x.Type == "ImageExtn").FirstOrDefault().Value;
+                                var sid = User.FindFirst(ClaimTypes.Sid);
+                                if (ImageExtn != string.Empty)
+                                {
+                                    var pth = System.IO.Path.Combine(environment.WebRootPath, "images\\users\\" + sid.ToString() + ImageExtn);
+                                    if (System.IO.File.Exists(pth))
+                                    {
+                                        clientimg = "/images/users/" + sid.ToString() + ImageExtn;
+                                    }
+                                }
+                                <img src=@clientimg class="user-img" alt="user profile">
+                            }
+                            
                             <div class="user-info ps-3">
                                 @if (User.Identity.IsAuthenticated)
                                 {

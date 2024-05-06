@@ -1,0 +1,71 @@
+﻿@page
+@model ShiftManagement.WebPortal.Pages.SAdminIndexModel
+@{
+}
+
+<div class="row">
+    <div class="col-12 col-xl-12 d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0">Clients (Super Admin View)</h5>
+                    </div>
+                    <div class="font-22 ms-auto">
+                        <i class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                </div>
+            </div>
+            <div class="customers-list p-3 mb-3">              
+
+                @{
+                    foreach (var cl in Model.ClientsList)
+                    {
+                        var clientimg = "/images/clients/Noimage.jfif";
+                        if(cl.ImageExtn != null)
+                        {
+                            clientimg = "/images/clients/" + cl.Id.ToString() + cl.ImageExtn;
+                        }
+                        <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
+                            <div class="">
+                                <img src=@clientimg class="rounded-circle" width="46" height="46" alt="clientImage_@cl.Id.ToString()" asp-append-version="true" />
+                            </div>
+                            <div class="ms-2">
+                                <h6 class="mb-1 font-14">@cl.Name</h6>
+                                <p class="mb-0 font-13 text-secondary">@cl.Emails</p>
+                            </div>
+                            <div class="list-inline d-flex customers-contacts ms-auto">
+                                <a href="javascript:;" class="list-inline-item text-primary border-primary viewclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='fa fa-eye'></i></a>
+                                <a href="javascript:;" class="list-inline-item text-primary border-primary editclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bxs-pencil'></i></a>
+                                <a href="javascript:;" class="list-inline-item text-danger border-danger deleteclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bx-trash'></i></a>
+                            </div>
+                        </div>
+                    }
+                }               
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Client Profile settings modal -->
+<div class="modal" tabindex="-1" role="dialog" id="client-profile-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> View/Edit Settings for <span id="mdl_client_name"></span></h5>               
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <input type="hidden" id="hinp_client_profile_modal_clientid" />
+                <input type="hidden" id="hinp_client_profile_modal_clientname" />
+                <div id="div_client_profile_settings"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {   
+    <script src="~/js/superadmin.js"></script>
+}

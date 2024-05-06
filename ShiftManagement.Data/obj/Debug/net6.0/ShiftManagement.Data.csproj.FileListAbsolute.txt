@@ -1,0 +1,14 @@
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.csproj.AssemblyReference.cache
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.GeneratedMSBuildEditorConfig.editorconfig
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.AssemblyInfoInputs.cache
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.AssemblyInfo.cs
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.csproj.CoreCompileInputs.cache
+K:\ShiftManagement\Prototype\ShiftManagement.Data\bin\Debug\net6.0\ShiftManagement.Data.deps.json
+K:\ShiftManagement\Prototype\ShiftManagement.Data\bin\Debug\net6.0\ShiftManagement.Data.runtimeconfig.json
+K:\ShiftManagement\Prototype\ShiftManagement.Data\bin\Debug\net6.0\ShiftManagement.Data.dll
+K:\ShiftManagement\Prototype\ShiftManagement.Data\bin\Debug\net6.0\ShiftManagement.Data.pdb
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.dll
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\refint\ShiftManagement.Data.dll
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.pdb
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ShiftManagement.Data.genruntimeconfig.cache
+K:\ShiftManagement\Prototype\ShiftManagement.Data\obj\Debug\net6.0\ref\ShiftManagement.Data.dll

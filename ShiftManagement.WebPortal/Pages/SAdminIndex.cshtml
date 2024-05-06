@@ -1,5 +1,6 @@
 ﻿@page
 @model ShiftManagement.WebPortal.Pages.SAdminIndexModel
+@inject IWebHostEnvironment WebHostEnvironment
 @{
 }
 
@@ -21,10 +22,14 @@
                 @{
                     foreach (var cl in Model.ClientsList)
                     {
-                        var clientimg = "/images/clients/Noimage.jfif";
-                        if(cl.ImageExtn != null)
+                        var clientimg = "/images/clients/Noimage2.png";
+                        if (cl.ImageExtn != null)
                         {
-                            clientimg = "/images/clients/" + cl.Id.ToString() + cl.ImageExtn;
+                            var pth = System.IO.Path.Combine(WebHostEnvironment.WebRootPath, "images\\clients\\" + cl.Id.ToString() + cl.ImageExtn);
+                            if (System.IO.File.Exists(pth))
+                            {
+                                clientimg = "/images/clients/" + cl.Id.ToString() + cl.ImageExtn;
+                            }
                         }
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">

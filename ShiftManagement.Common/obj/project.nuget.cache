@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bt792QnXgApHj+l0MOTcyPGlQJH+oz2AMRwHy0s8mvMc6jZqFm0TQAfAEXYhWWwW9uiONHKgiXP7JSxmFrVK6Q==",
+  "dgSpecHash": "ehvz60Ge9znGvXp1NYl0820Fww9PXRybw/SLm2rWjSiCG1xjNszLjDYWJAOZlNs56nW544jls1aheAW9Scul2g==",
   "success": true,
-  "projectFilePath": "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
+  "projectFilePath": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

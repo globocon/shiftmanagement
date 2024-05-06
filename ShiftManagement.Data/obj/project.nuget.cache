@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5KPjxI27CfWneG5XZLe72N3PHOmCIIpyKNgAR3d/z3rTPRApVb2FprK4d00hp8M2dhwpv6OcU0tPWIGC6s59yA==",
+  "dgSpecHash": "CULefTo9j02TQOIUpdqSF1TTp4IW47CWPfGqGZzW1Wu9mSeuBlmxPuIzy9PTKZDPVCGh9SIF8QSV5JQvmQcBqw==",
   "success": true,
-  "projectFilePath": "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Data\\ShiftManagement.Data.csproj",
+  "projectFilePath": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Data\\ShiftManagement.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

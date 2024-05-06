@@ -2937,6 +2937,38 @@
       "PackagePath": "staticwebassets\\assets\\plugins\\smart-wizard\\js\\jquery.smartWizard.min.js"
     },
     {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\css\\tui-calendar.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\css\\tui-calendar.css"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\css\\tui-calendar.css.map",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\css\\tui-calendar.css.map"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\css\\tui-calendar.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\css\\tui-calendar.min.css"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\css\\tui-calendar.min.css.map",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\css\\tui-calendar.min.css.map"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\js\\tui-calendar.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\js\\tui-calendar.js"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\js\\tui-calendar.js.map",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\js\\tui-calendar.js.map"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\js\\tui-calendar.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\js\\tui-calendar.min.js"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\toastUI\\js\\tui-calendar.min.js.map",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastUI\\js\\tui-calendar.min.js.map"
+    },
+    {
       "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\assets\\plugins\\vectormap\\jquery-jvectormap-2.0.2.css",
       "PackagePath": "staticwebassets\\assets\\plugins\\vectormap\\jquery-jvectormap-2.0.2.css"
     },
@@ -3197,12 +3229,12 @@
       "PackagePath": "staticwebassets\\images\\Employees\\NoImage.png"
     },
     {
-      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\images\\Users\\NoImage2.png",
-      "PackagePath": "staticwebassets\\images\\Users\\NoImage2.png"
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\images\\Users\\NoImage.png",
+      "PackagePath": "staticwebassets\\images\\Users\\NoImage.png"
     },
     {
-      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\images\\Users\\NoImage3.png",
-      "PackagePath": "staticwebassets\\images\\Users\\NoImage3.png"
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\images\\Users\\NoImage2.png",
+      "PackagePath": "staticwebassets\\images\\Users\\NoImage2.png"
     },
     {
       "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\images\\Users\\ProfileImage.jfif",
@@ -3213,8 +3245,8 @@
       "PackagePath": "staticwebassets\\images\\logo.png"
     },
     {
-      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\SuperAdmin.js",
-      "PackagePath": "staticwebassets\\js\\SuperAdmin.js"
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\calendars.js",
+      "PackagePath": "staticwebassets\\js\\calendars.js"
     },
     {
       "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\companyadmin.js",
@@ -3229,8 +3261,20 @@
       "PackagePath": "staticwebassets\\js\\newRequestPage.js"
     },
     {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\schedules.js",
+      "PackagePath": "staticwebassets\\js\\schedules.js"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\shiftAdmin.js",
+      "PackagePath": "staticwebassets\\js\\shiftAdmin.js"
+    },
+    {
       "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\js\\superAdmin.js",
+      "PackagePath": "staticwebassets\\js\\superAdmin.js"
     },
     {
       "Id": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.WebPortal\\wwwroot\\lib\\bootstrap-multiselect\\css\\bootstrap-multiselect.css",

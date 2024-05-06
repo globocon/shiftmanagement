@@ -82,7 +82,7 @@ $(function () {
                 "render": function (data, type, row) {
                     var rtn = '<div class="d-flex align-items-center">';
                     rtn += '    <div class="">';
-                    var staffimg = '/Images/Employees/Noimage.jfif';
+                    var staffimg = '/Images/Employees/NoImage.png';
                     if (row.imageExtn != null) {
                         staffimg = '/Images/Employees/' + row.id + row.imageExtn + '?t=' + Date.now(); // Timestamp added to overcome browser cache issue
                     }

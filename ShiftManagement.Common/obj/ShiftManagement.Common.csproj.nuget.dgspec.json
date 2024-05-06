@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\ShiftManagement.Common.csproj": {}
+    "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\ShiftManagement.Common.csproj": {}
   },
   "projects": {
-    "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\ShiftManagement.Common.csproj": {
+    "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\ShiftManagement.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
+        "projectUniqueName": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
         "projectName": "ShiftManagement.Common",
-        "projectPath": "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
+        "projectPath": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\ShiftManagement.Common.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "K:\\ShiftManagement\\WorkSpace II\\ShiftManagement.Common\\obj\\",
+        "outputPath": "K:\\ShiftManagement\\WorkSpace\\ShiftManagement.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

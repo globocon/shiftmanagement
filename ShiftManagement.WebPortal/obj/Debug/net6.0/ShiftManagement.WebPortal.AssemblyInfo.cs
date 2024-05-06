@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShiftManagement.WebPortal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01fe1b2d7aea67bba947e65b15cdfc4a22fe590d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShiftManagement.WebPortal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShiftManagement.WebPortal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.1")]

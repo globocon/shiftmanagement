@@ -5,96 +5,47 @@ using ShiftManagement.Data;
 using ShiftManagement.Data.Helpers;
 using ShiftManagement.Data.Models;
 using ShiftManagement.Data.Providers;
+using System.Security.Claims;
 
 namespace ShiftManagement.WebPortal.Pages
 {
     public class StaffIndexModel : PageModel
     {
-        private readonly IModuleDataProvider _moduleData;
+       
         private readonly ILogger<StaffIndexModel> _logger;
-        private readonly ShiftDbContext _context;
-        public List<int> DistinctYears { get; set; }
-
-        public StaffIndexModel(ILogger<StaffIndexModel> logger, ShiftDbContext context)
+        private readonly IShiftDataProvider _shiftDataProvider;
+       
+        public StaffIndexModel(ILogger<StaffIndexModel> logger, IShiftDataProvider shiftDataProvider)
         {
             _logger = logger;
-            _context = context;
+            _shiftDataProvider = shiftDataProvider;
         }
 
         public void OnGet()
         {
 
         }
-        public IActionResult OnGetLast5RequestsData()
+        public IActionResult OnGetEmployeeShiftData(DateTime? shiftDate)
         {
+            List<ShiftDetail> ShiftData = new List<ShiftDetail>();
+            var startDate = DateHelper.thisWeekStart;
+            var endDate = DateHelper.thisWeekEnd;
 
-            var RequestDetail = _context.MstctsRequestHeader
-   .OrderByDescending(x => x.RequestId).Select(n => new { n.RequestId, n.RequestNumber, n.ReceivedOnDate, n.TypeOfReqId, n.RequestFrom, n.RequestTo, n.SubProgrammeId, n.StaffResponsible })
-   .Take(5)
-   .ToList();
-
-            return new JsonResult(RequestDetail);
-        }
-
-        public IActionResult OnGetLast5ResponseData()
-        {
-
-            var ResponseDetail = _context.MstctsRequestHeader
-   .OrderByDescending(x => x.RequestId).Select(n => new { n.RequestId,n.ReceivedOnDate, n.TypeOfReqId,  n.RequestFrom, n.RespondedThroughId, n.RespondedYear })
-   .Take(5)
-   .ToList();
-
-            return new JsonResult(ResponseDetail);
-        }
-        public JsonResult OnGetLatestYear()
-        {
-            //var value = string.Empty;
-            try
+            if(shiftDate != null)
             {
+                DateTime ndtm = new DateTime(shiftDate.Value.Year, shiftDate.Value.Month, shiftDate.Value.Day);
+                startDate = DateHelper.thisWeekStartOfDate(ndtm);
+                endDate = DateHelper.thisWeekEndOfDate(ndtm);
+            }            
 
-               
+            var empid = User.Claims.FirstOrDefault(x => x.Type == "Eid").Value;
+            if(empid != string.Empty)
+                ShiftData = _shiftDataProvider.GetEmployeeShiftDataForTheWeek(Convert.ToInt32(empid), startDate, endDate);
 
-                DistinctYears = _context.MstctsRequestHeader.Where(p => p.ReceivedOnDate != null && p.ReceivedOnDate.HasValue).Select(p => p.ReceivedOnDate.Value.Year)
-               .Distinct()
-               .OrderByDescending(year => year)
-               .ToList();
-               
-                return new JsonResult(new { value = DistinctYears });
-
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult("2024");
-
-            }
-
+            return new JsonResult(new { ShiftData, startDate = startDate.ToString("dd/MM/yyyy"), endDate = endDate.ToString("dd/MM/yyyy") });
         }
-        public JsonResult OnGetGroupByYears()
-        {
+               
        
-            try
-            {
-              
-                var yearCounts = _context.MstctsRequestHeader
-                .Where(p => p.ReceivedOnDate != null && p.ReceivedOnDate.HasValue)
-                .GroupBy(p => p.ReceivedOnDate.Value.Year)
-                .Select(g => new { Year = g.Key, Count = g.Count(), RespondCount = g.Count(x => x.Responded == true) })
-                .OrderByDescending(year => year.Year)
-                .ToList();
-         
-                return new JsonResult(new { value = yearCounts });
-
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult("2024");
-
-            }
-
-
-
-
-        }
     }
 }
     

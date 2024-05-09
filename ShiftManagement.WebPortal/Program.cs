@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ShiftManagement.Data;
 using ShiftManagement.Data.Providers;
-using ShiftManagement.Data.Services;
 using ShiftManagement.WebPortal.Helpers;
 using ShiftManagement.WebPortal.Services;
 
@@ -15,16 +14,8 @@ builder.Services.AddDbContext<ShiftDbContext>(options => options.UseSqlServer(co
 builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IEmployeeDataProvider, EmployeeDataProvider>();
-
-
-builder.Services.AddScoped<IModuleDataProvider, ModuleDataProvider>();
-builder.Services.AddScoped<IDepartmentDataProvider, DepartmentDataProvider>();
-builder.Services.AddScoped<IApplicationDataProvider, ApplicationDataProvider>();
 builder.Services.AddScoped<IClientDataProvider, ClientDataProvider>();
-builder.Services.AddScoped<IFieldDataProvider, FieldDataProvider>();
-builder.Services.AddScoped<IViewDataService, ViewDataService>();
-builder.Services.AddScoped<IExternalDataApiCallService, ExternalDataApiCallService>();
-builder.Services.AddScoped<ICreateRequestDataProvider , CreateRequestDataProvider>();
+builder.Services.AddScoped<IShiftDataProvider, ShiftDataProvider>();
 builder.Services.AddSession();
 builder.Services.AddRazorPages(options =>
 {

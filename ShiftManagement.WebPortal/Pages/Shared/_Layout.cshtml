@@ -114,22 +114,22 @@
                                 <div class="menu-title">Home</div>
                             </a>
                         </li>
-                        <li>
-                            <a href="/newrequest">
-                                <div class="parent-icon">
-                                    <i class="bx bx-book-add"></i>
-                                </div>
-                                <div class="menu-title">Clients</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/newrequest">
-                                <div class="parent-icon">
-                                    <i class="bx bx-book-add"></i>
-                                </div>
-                                <div class="menu-title">Staffs</div>
-                            </a>
-                        </li>
+                        // <li>
+                        //     <a href="/newrequest">
+                        //         <div class="parent-icon">
+                        //             <i class="bx bx-book-add"></i>
+                        //         </div>
+                        //         <div class="menu-title">Clients</div>
+                        //     </a>
+                        // </li>
+                        // <li>
+                        //     <a href="/newrequest">
+                        //         <div class="parent-icon">
+                        //             <i class="bx bx-book-add"></i>
+                        //         </div>
+                        //         <div class="menu-title">Staffs</div>
+                        //     </a>
+                        // </li>
                         <li>
                             <a href="/ShiftAdmin">
                                 <div class="parent-icon">
@@ -298,7 +298,7 @@
                             @{
                                 var clientimg = "/images/users/Noimage.png";
                                 var ImageExtn = claimsIdentity.Claims.Where(x => x.Type == "ImageExtn").FirstOrDefault().Value;
-                                var sid = User.FindFirst(ClaimTypes.Sid);
+                                var sid = User.FindFirst(ClaimTypes.Sid).Value;
                                 if (ImageExtn != string.Empty)
                                 {
                                     var pth = System.IO.Path.Combine(environment.WebRootPath, "images\\users\\" + sid.ToString() + ImageExtn);
@@ -439,6 +439,7 @@
     <script src="assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
     <script src="assets/plugins/select2/js/select2.min.js"></script>
     <script src="assets/js/form-select2.js"></script>
+    <script src="~/assets/plugins/luxon/luxon.min.js"></script>
 
     <!--DatePicker JS-->
     <script src="assets/plugins/datetimepicker/js/legacy.js"></script>

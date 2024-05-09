@@ -66,6 +66,11 @@ namespace ShiftManagement.WebPortal.Services
             else
                 claims.Add(new Claim(type: "ImageExtn", value: string.Empty));
 
+            if (user.IsEmployee && user.EmployeeId != null)
+                claims.Add(new Claim(type: "Eid", value: user.EmployeeId.ToString()));
+            else
+                claims.Add(new Claim(type: "Eid", value: string.Empty));
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties

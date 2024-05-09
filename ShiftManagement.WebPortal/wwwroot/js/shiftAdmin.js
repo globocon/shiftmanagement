@@ -342,19 +342,19 @@
 
         if (type === 'day') {
             type = 'Daily';
-            iconClassName = 'calendar-icon ic_view_day';
+            iconClassName = 'bx bx-menu';
         } else if (type === 'week') {
             type = 'Weekly';
-            iconClassName = 'calendar-icon ic_view_week';
+            iconClassName = 'bx bx-menu bx-rotate-90';
         } else if (options.month.visibleWeeksCount === 2) {
             type = '2 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
+            iconClassName = 'bx bx-menu';
         } else if (options.month.visibleWeeksCount === 3) {
             type = '3 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
+            iconClassName = 'bx bx-menu';
         } else {
             type = 'Monthly';
-            iconClassName = 'calendar-icon ic_view_month';
+            iconClassName = 'bx bx-grid-small';
         }
 
         calendarTypeName.innerHTML = type;
@@ -381,7 +381,7 @@
         } else {
             html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY.MM.DD'));
             html.push(' ~ ');
-            html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
+            html.push(moment(cal.getDateRangeEnd().getTime()).format('YYYY.MM.DD'));
         }
         renderRange.innerHTML = html.join('');
     }
@@ -396,7 +396,7 @@
 
     function setEventListener() {
         $('#menu-navi').on('click', onClickNavi);
-        $('.dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
+        $('.dropdown-menu').on('click','a[role="menuitem"]', onClickMenu);
         $('#lnb-calendars').on('change', onChangeCalendars);
 
         $('#btn-save-schedule').on('click', onNewSchedule);
@@ -411,6 +411,48 @@
         return target.dataset ? target.dataset.action : target.getAttribute('data-action');
     }
 
+    function getStaffandSchedule() {
+        var calendar;
+        var id = 0;
+
+
+        $.ajax({
+            url: '/CAdminIndex?handler=DataForStaffTable',
+            type: 'GET',
+        }).done(function (data) {
+            //console.log(data);
+            if (data != null) {
+                data.forEach(function (item) {
+                    var color = getRandomColor()
+                    calendar = new CalendarInfo();
+                    calendar.id = String(item.id);
+                    calendar.name = item.name;
+                    calendar.color = '#ffffff';
+                    calendar.bgColor = color;
+                    calendar.dragBgColor = color;
+                    calendar.borderColor = color;
+                    addCalendar(calendar);
+                });
+
+                var calendarList = document.getElementById('calendarList');
+                var html = [];
+                CalendarList.forEach(function (calendar) {
+                    html.push('<div class="lnb-calendars-item"><label>' +
+                        '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
+                        '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
+                        '<span>' + calendar.name + '</span>' +
+                        '</label></div>'
+                    );
+                });
+                calendarList.innerHTML = html.join('\n');
+
+                setSchedules();
+            }
+        }).fail(function () {
+            console.log('error');
+        });
+    }
+
     resizeThrottled = tui.util.throttle(function () {
         cal.render();
     }, 50);
@@ -419,22 +461,22 @@
 
     setDropdownCalendarType();
     setRenderRangeText();
-    setSchedules();
+    getStaffandSchedule();
     setEventListener();
 });
 
 
 // set calendars
-(function () {
-    var calendarList = document.getElementById('calendarList');
-    var html = [];
-    CalendarList.forEach(function (calendar) {
-        html.push('<div class="lnb-calendars-item"><label>' +
-            '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
-            '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
-            '<span>' + calendar.name + '</span>' +
-            '</label></div>'
-        );
-    });
-    calendarList.innerHTML = html.join('\n');
-})();
+//(function () {
+//    var calendarList = document.getElementById('calendarList');
+//    var html = [];
+//    CalendarList.forEach(function (calendar) {
+//        html.push('<div class="lnb-calendars-item"><label>' +
+//            '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
+//            '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
+//            '<span>' + calendar.name + '</span>' +
+//            '</label></div>'
+//        );
+//    });
+//    calendarList.innerHTML = html.join('\n');
+//})();

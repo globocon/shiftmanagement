@@ -9,22 +9,17 @@
 }
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-column align-items-center text-center">
+            <div class="card-body">                
+                <div class="d-flex flex-column align-items-left text-left">
                     <div id="lnb-calendars" class="lnb-calendars">
-                        <div>
-                            <div class="lnb-calendars-item">
-                                <button id="btn-new-schedule" type="button" class="btn btn-primary btn-block lnb-new-schedule-btn" data-toggle="modal">
-                                    New schedule
-                                </button>
-                                <label>
-                                    <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
-                                    <span></span>
-                                    <strong>View all</strong>
-                                </label>
-                            </div>
+                        <div class="lnb-calendars-item col-md-12 mt-1 mb-1">
+                            <label>
+                                <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+                                <span></span>
+                                <strong>View all Schedule</strong>
+                            </label>
                         </div>
                         <div id="calendarList" class="lnb-calendars-d1">
                         </div>
@@ -33,74 +28,80 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
                 <div id="menu">
                     <span class="dropdown">
-                        <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="true">
-                            <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+                        <button id="dropdownMenu-calendarType" class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                            <i id="calendarTypeIcon" class="bx bx-grid-small" style="margin-right: 4px;"></i>
                             <span id="calendarTypeName">Dropdown</span>&nbsp;
                             <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                            <li role="presentation">
-                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                                    <i class="calendar-icon ic_view_day"></i>Daily
+                            <li>
+                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-daily">
+                                    <i class="bx bx-menu"></i>Daily
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weekly">
+                                    <i class="bx bx-menu bx-rotate-90"></i>Weekly
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                                    <i class="calendar-icon ic_view_week"></i>Weekly
+                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-monthly">
+                                    <i class="bx bx-grid-small"></i>Month
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                                    <i class="calendar-icon ic_view_month"></i>Month
+                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weeks2">
+                                    <i class="bx bx-menu"></i>2 weeks
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
-                                    <i class="calendar-icon ic_view_week"></i>2 weeks
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
-                                    <i class="calendar-icon ic_view_week"></i>3 weeks
+                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weeks3">
+                                    <i class="bx bx-menu"></i>3 weeks
                                 </a>
                             </li>
                             <li role="presentation" class="dropdown-divider"></li>
                             <li role="presentation">
-                                <a role="menuitem" data-action="toggle-workweek">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-workweek">
                                     <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
                                     <span class="checkbox-title"></span>Show weekends
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a role="menuitem" data-action="toggle-start-day-1">
-                                    <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-start-day-1">
+                                    <input type="checkbox" class="tui-full-calendar-checkbox-square  ml-2" value="toggle-start-day-1">
                                     <span class="checkbox-title"></span>Start Week on Monday
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a role="menuitem" data-action="toggle-narrow-weekend">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-narrow-weekend">
                                     <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
                                     <span class="checkbox-title"></span>Narrower than weekdays
                                 </a>
                             </li>
-                        </ul>
+                        </ul>   
                     </span>
                     <span id="menu-navi">
-                        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
-                        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
-                            <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+                        <button type="button" class="btn btn-outline-primary btn-sm move-today" data-action="move-today">Today</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm move-day text-center" data-action="move-prev">
+                            <i class="lni lni-chevron-left-circle me-0" data-action="move-prev"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
-                            <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+                        <button type="button" class="btn btn-outline-primary btn-sm move-day" data-action="move-next">
+                            <i class="lni lni-chevron-right-circle me-0" data-action="move-next"></i>
                         </button>
                     </span>
                     <span id="renderRange" class="render-range"></span>
+                    <div class="d-flex flex-column pull-right mb-2">
+                        <div class="col-md-12">
+                            <button id="btn-new-schedule" type="button" class="btn btn-success btn-block lnb-new-schedule-btn" data-toggle="modal">
+                                New schedule
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div id="calendar"></div>
             </div>

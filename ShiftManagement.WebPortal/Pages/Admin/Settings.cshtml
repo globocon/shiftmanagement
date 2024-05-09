@@ -112,10 +112,10 @@
                     <div class="col-md-4">
                         <select class="form-control" id="report_fields_types">
                             <option value="">None</option>
-                            @foreach (var item in Model.FieldDataProvider.GetFieldTypes())
+                            @* @foreach (var item in Model.FieldDataProvider.GetFieldTypes())
                             {
                                 <option value="@item.Id">@item.FieldTypeName</option>
-                            }
+                            } *@
                         </select>
                     </div>
                     <div class="col-md-5 text-right"><button class="btn btn-success mb-3" id="add_fields_page" data-bs-toggle="modal" data-bs-target="#fields-modal"><i class="fa fa-plus mr-2"></i>Add / Delete Field Type</button></div>
@@ -214,7 +214,7 @@
                             <tr>
                                 <td colspan="2" class="p-0 b-0">
                                     <ul id="itemList_fields" class="list-group d-block w-auto">
-                                        @if (@Model.FieldDataProvider.GetFieldTypes() != null)
+                                       @*  @if (@Model.FieldDataProvider.GetFieldTypes() != null)
                                         {
 
                                             foreach (var item in @Model.FieldDataProvider.GetFieldTypes())
@@ -226,7 +226,7 @@
                                                 </li>
 
                                             }
-                                        }
+                                        } *@
                                     </ul>
                                 </td>
                             </tr>

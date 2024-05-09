@@ -31,7 +31,9 @@ namespace ShiftManagement.Data.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public RoleType RoleType { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public bool IsEmployee { get; set; } = false;
+        public int? EmployeeId { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime? ActivateDate { get; set; }
         public DateTime? DeletionDate { get; set; }

@@ -12,8 +12,8 @@ namespace ShiftManagement.Data.Providers
     {
        List<ShiftDetail> GetEmployeeShiftDataForTheWeek(int EmpId, DateTime StartDate, DateTime EndDate);
 		List<ShiftDetail> GetAllEmployeeShiftDataForTheWeek(DateTime StartDate, DateTime EndDate);
-
-	}
+    
+    }
 
     public class ShiftDataProvider: IShiftDataProvider
     {
@@ -45,6 +45,6 @@ namespace ShiftManagement.Data.Providers
 			return shft;
 		}
 
-	}
-    
+
+    }
 }

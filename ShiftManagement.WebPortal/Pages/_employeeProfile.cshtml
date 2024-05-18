@@ -1,4 +1,4 @@
-﻿@model ShiftManagement.Data.Models.Clients
+﻿@model ShiftManagement.Data.Models.Employees
 
 @{
 
@@ -21,7 +21,7 @@
 					<div class="mt-3">
 						<h4>@Model.Name</h4>
 						<p class="text-secondary mb-1">Full Stack Developer</p>
-						<p class="text-muted font-size-sm">@Model.Address</p>
+						<p class="text-muted font-size-sm">@Model.Name</p>
 						<button class="btn btn-primary">Follow</button>
 						<button class="btn btn-outline-primary">Message</button>
 					</div>
@@ -65,32 +65,32 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Email</h6>
-					</div>
-					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Emails" class="form-control" value="@Model.Emails" />
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-sm-3">
 						<h6 class="mb-0">Phone</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
 						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" />
 					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">DOB</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.DOB" class="form-control" value="@Model.DOB" />
+					</div>
 				</div>				
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Address</h6>
+						<h6 class="mb-0">Date of Joining</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Address" class="form-control" value="@Model.Address" />
+						<input asp-for="@Model.DOJ" class="form-control" value="@Model.DOJ" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3"></div>
 					<div class="col-sm-9 text-secondary">
-						<input id="btn_saveme" type="button" class="btn btn-primary px-4 btnsave_me"  value="Save Changes" />
+						<input id="btn_saveemployee" type="button" class="btn btn-primary px-4 btnsave_employee"  value="Save Changes" />
 				
 					</div>
 				</div>

@@ -73,6 +73,7 @@
 					</table>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
@@ -117,7 +118,43 @@
 		</div>
 	</div>
 </div>
-
+<!-- Employee Profile settings modal -->
+<div class="modal" tabindex="-1" role="dialog" id="employee-profile-modal" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> View/Edit Settings for <span id="mdl_employee_name"></span></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body bg-light">
+				<input type="hidden" id="hinp_employee_profile_modal_employeeid" />
+				<input type="hidden" id="hinp_employee_profile_modal_employeename" />
+				<div id="div_employee_profile_settings"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="DeleteConfirmModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Confirm</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div>
+				<input id="inpClientidDeleteConfirmModal" class="d-none" />
+			</div>
+			<div class="modal-body">
+				<p id="msgDeleteConfirmModal"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnDeleteConfirmModal" class="btn btn-success">Confirm</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @Html.AntiForgeryToken()
 
 @section Scripts {

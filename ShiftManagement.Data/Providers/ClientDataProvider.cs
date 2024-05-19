@@ -4,10 +4,12 @@ namespace ShiftManagement.Data.Providers
 {
 
     public interface IClientDataProvider
-    {
+    {        
         public List<Clients> GetClientsList();
         public Clients GetClientsById(int id);
         void DeleteClientDetails(int id);
+
+        public List<Clients> GetClientsListForCompanyAdmin(Guid UserID);
     }
     public class ClientDataProvider : IClientDataProvider
 	{
@@ -17,7 +19,7 @@ namespace ShiftManagement.Data.Providers
             _context = context;
 
         }
-        
+                
         public List<Clients> GetClientsList()
         {
             return _context.Clients.Where(x=> x.IsDeleted == false).OrderBy(x => x.Name).ToList();
@@ -41,6 +43,13 @@ namespace ShiftManagement.Data.Providers
             ClientsDetailsToDelete.IsDeleted = true;
 
 			_context.SaveChanges();
+        }
+
+        public List<Clients> GetClientsListForCompanyAdmin(Guid UserID)
+        {
+            return _context.Clients.Where(m => _context.USR_Users.Any(a => a.Id == UserID && a.CompanyId == m.CompanyId) && m.IsDeleted == false).OrderBy(x => x.Name).ToList();
+
+            //return _context.Clients.Where(x => x.IsDeleted == false && x.CompanyId.Value  ).OrderBy(x => x.Name).ToList();
         }
     }
 }

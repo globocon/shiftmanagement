@@ -19,9 +19,9 @@ namespace ShiftManagement.Data.Models
 		public DateTime? DOJ { get; set; }
 		public DateTime? CreatedDateTime { get; set; }
 		public string? ImageExtn { get; set; }
+        public Guid? CompanyId { get; set; }
 
-
-		[NotMapped]
+        [NotMapped]
 		public string FormattedDOB { get { return DOB.HasValue ? DOB.Value.ToString("dd-MMM-yyyy") : string.Empty; } }
 		[NotMapped]
 		public string FormattedDOJ { get { return DOJ.HasValue ? DOJ.Value.ToString("dd-MMM-yyyy") : string.Empty; } }

@@ -5,29 +5,111 @@ $(function () {
 
     new PerfectScrollbar('.customers-list');
 
-    $('.deleteclient').on('click', function () {
-        const btn = $(this);
-        const clientId = btn.attr('data-clientid');
-        const clientName = btn.attr('data-clientname');
-        if (confirm('Are you sure to delete client "' + clientName +'" ?')) {
-            
-            alert('client ' + clientName + ' marked for deletion !!!');
-
-            //$.ajax({
-            //    url: '/Admin/Settings?handler=ShowPassword',
-            //    data: { id: userId },
-            //    type: 'POST',
-            //    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
-            //}).done(function (data) {
-            //    spanElem.text(data);
-            //    btn.hide();
-            //}).fail(function () {
-            //    console.log('error')
-            //});
-        }
+    $('#add-new-company').on('click', function () {
+        $('#add-new-company-modal').modal('show');
     });
 
-    $('.viewclient').on('click', function () {
+    $('#btn-mdl-add-new-company').on('click', function () {
+        if (isNewCompanyEntryValid()) {
+            $.ajax({
+                url: '/SAdminIndex?handler=NewCompany',
+                type: 'POST',
+                data: $('#frmNewCompany').serialize(),
+                headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+            }).done(function (data) {
+                if (data.success) {
+                    //location.reload(true);
+                    $('#add-new-company-modal').modal('hide');
+                    alert_success_with_refresh_window(data.message);
+                } else {                    
+                    alert_error(data.message);
+                }
+            }).fail(function () {
+                //showStatusNotification(false, 'Something went wrong');
+            });
+        }
+    });
+    $('#add-new-company-modal').on('show.bs.modal', function (event) {
+        $('#frmNewCompany').removeClass('was-validated');
+        $('#frmNewCompany').removeClass('invalid');
+        $("#newCompany_CompanyName").val('');
+        $("newCompany_CompanyNameID").val('');
+        $('#mdl-add-new-company-checkId-available').html('.');     
+    });
+
+    function isNewCompanyEntryValid() {
+        $('#frmNewCompany').removeClass('was-validated');
+        $('#frmNewCompany').removeClass('invalid');
+
+        let valdfail = false;
+        let msg = "";
+
+        var pCompanyName = document.getElementById("newCompany_CompanyName");
+        var pCompanyID = document.getElementById("newCompany_CompanyNameID");
+               
+        if (pCompanyName.value == '' || pCompanyID.value == '') {
+            valdfail = true;
+        }
+
+        if (valdfail == true) {
+            $('#frmNewCompany').addClass('was-validated');
+            $('#frmNewCompany').addClass('invalid');         
+            return false;
+        }
+        return true;
+    }
+
+    $('#newCompany_CompanyNameID').on('keyup', function () {
+        const txt = $(this);
+        const disp = $('#mdl-add-new-company-checkId-available');  
+        disp.html('.');
+        if (txt.val().length >= 3) {
+            $.ajax({
+                url: '/SAdminIndex?handler=CheckIdAvailable',
+                type: 'POST',
+                data: { companyId: txt.val() },
+                headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+            }).done(function (data) {
+                disp.removeClass('text-success').removeClass('text-danger');
+                disp.html(data.message);
+                if (data.success) {
+                    disp.addClass('text-success'); 
+                } else {
+                    disp.addClass('text-danger');
+                }              
+            }).fail(function () {
+                //disp.addClass('d-none');
+            });            
+        } 
+    });
+
+
+    $('.deletecompany').on('click', function () {
+        const btn = $(this);
+        const companyId = btn.attr('data-companyid');
+        const companyName = btn.attr('data-companyname');
+        var qus = 'Are you sure to delete company "' + companyName + '" ?';
+        confirm_with_callback(qus, companyId, deleteCompany);
+    });
+
+    function deleteCompany(companyId) {
+        $.ajax({
+            url: '/SAdminIndex?handler=DeleteCompany',
+            data: { companyid: companyId },
+            type: 'POST',
+            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+        }).done(function (data) {
+            if (data.success) {
+                alert_success_with_refresh_window(data.message);
+            } else {
+                alert_error(data.message);
+            }
+        }).fail(function () {
+            console.log('error')
+        });
+    }
+
+    $('.viewcompany').on('click', function () {
         const btn = $(this);
         const clientId = btn.attr('data-clientid');
         const clientName = btn.attr('data-clientname');       
@@ -36,7 +118,7 @@ $(function () {
         $('#client-profile-modal').modal('show');       
     });
 
-    $('.editclient').on('click', function () {
+    $('.editcompany').on('click', function () {
         const btn = $(this);
         const clientId = btn.attr('data-clientid');
         const clientName = btn.attr('data-clientname');

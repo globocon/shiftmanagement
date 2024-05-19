@@ -55,7 +55,7 @@ $(function () {
             // window.sharedVariable = button.data('cs-id');
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
-            // console.log(csnme);    
+            // console.log(csnme);
         });
     });
 
@@ -269,6 +269,9 @@ $(function () {
         shiftDataToDisplayDateString = convertDateFormat(shiftDataToDisplayDate, 'yyyy-MM-dd');
         Dttbl_shiftTable.ajax.reload();
     });
-       
+
+
+   
 
 });
+

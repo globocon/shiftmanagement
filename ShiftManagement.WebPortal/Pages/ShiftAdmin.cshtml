@@ -11,14 +11,14 @@
 <div class="row">
     <div class="col-lg-3">
         <div class="card">
-            <div class="card-body">                
+            <div class="card-body">
                 <div class="d-flex flex-column align-items-left text-left">
                     <div id="lnb-calendars" class="lnb-calendars">
                         <div class="lnb-calendars-item col-md-12 mt-1 mb-1">
                             <label>
                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                                 <span></span>
-                                <strong>View all Schedule</strong>
+                                <strong>All Employee Schedule</strong>
                             </label>
                         </div>
                         <div id="calendarList" class="lnb-calendars-d1">
@@ -31,83 +31,148 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
-                <div id="menu">
-                    <span class="dropdown">
-                        <button id="dropdownMenu-calendarType" class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                            <i id="calendarTypeIcon" class="bx bx-grid-small" style="margin-right: 4px;"></i>
-                            <span id="calendarTypeName">Dropdown</span>&nbsp;
-                            <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                            <li>
-                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-daily">
-                                    <i class="bx bx-menu"></i>Daily
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weekly">
-                                    <i class="bx bx-menu bx-rotate-90"></i>Weekly
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-monthly">
-                                    <i class="bx bx-grid-small"></i>Month
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weeks2">
-                                    <i class="bx bx-menu"></i>2 weeks
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weeks3">
-                                    <i class="bx bx-menu"></i>3 weeks
-                                </a>
-                            </li>
-                            <li role="presentation" class="dropdown-divider"></li>
-                            <li role="presentation">
-                                <a role="menuitem" class="dropdown-item" data-action="toggle-workweek">
-                                    <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
-                                    <span class="checkbox-title"></span>Show weekends
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" class="dropdown-item" data-action="toggle-start-day-1">
-                                    <input type="checkbox" class="tui-full-calendar-checkbox-square  ml-2" value="toggle-start-day-1">
-                                    <span class="checkbox-title"></span>Start Week on Monday
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" class="dropdown-item" data-action="toggle-narrow-weekend">
-                                    <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-                                    <span class="checkbox-title"></span>Narrower than weekdays
-                                </a>
-                            </li>
-                        </ul>   
-                    </span>
-                    <span id="menu-navi">
-                        <button type="button" class="btn btn-outline-primary btn-sm move-today" data-action="move-today">Today</button>
-                        <button type="button" class="btn btn-outline-primary btn-sm move-day text-center" data-action="move-prev">
-                            <i class="lni lni-chevron-left-circle me-0" data-action="move-prev"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm move-day" data-action="move-next">
-                            <i class="lni lni-chevron-right-circle me-0" data-action="move-next"></i>
-                        </button>
-                    </span>
-                    <span id="renderRange" class="render-range"></span>
-                    <div class="d-flex flex-column pull-right mb-2">
-                        <div class="col-md-12">
-                            <button id="btn-new-schedule" type="button" class="btn btn-success btn-block lnb-new-schedule-btn" data-toggle="modal">
-                                New schedule
+                <div class="row mb-2">
+                    <div id="menu">
+                        <span class="dropdown">
+                            <button id="dropdownMenu-calendarType" class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                <i id="calendarTypeIcon" class="bx bx-grid-small" style="margin-right: 4px;"></i>
+                                <span id="calendarTypeName">Dropdown</span>&nbsp;
+                                <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
                             </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+                                <li>
+                                    <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-daily">
+                                        <i class="bx bx-menu"></i>Daily
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-weekly">
+                                        <i class="bx bx-menu bx-rotate-90"></i>Weekly
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="dropdown-item text-primary" role="menuitem" data-action="toggle-monthly">
+                                        <i class="bx bx-grid-small"></i>Month
+                                    </a>
+                                </li>
+                                @* <li role="presentation" class="dropdown-divider"></li>
+                                <li role="presentation">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-workweek">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+                                <span class="checkbox-title"></span>Show weekends
+                                </a>
+                                </li>
+                                <li role="presentation">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-start-day-1">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square  ml-2" value="toggle-start-day-1">
+                                <span class="checkbox-title"></span>Start Week on Monday
+                                </a>
+                                </li>
+                                <li role="presentation">
+                                <a role="menuitem" class="dropdown-item" data-action="toggle-narrow-weekend">
+                                <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+                                <span class="checkbox-title"></span>Narrower than weekdays
+                                </a>
+                                </li> *@
+                            </ul>
+                        </span>
+                        <span id="menu-navi">
+                            <button type="button" class="btn btn-outline-primary btn-sm move-today" data-action="move-today">Today</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm move-day text-center" data-action="move-prev">
+                                <i class="lni lni-chevron-left-circle me-0" data-action="move-prev"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm move-day" data-action="move-next">
+                                <i class="lni lni-chevron-right-circle me-0" data-action="move-next"></i>
+                            </button>
+                        </span>
+                        <span id="renderRange" class="render-range"></span>
+                        <div class="d-flex flex-column pull-right mb-2">
+                            <div class="col-md-12">
+                                <button id="btn-new-schedule" type="button" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-plus me-1"></i>
+                                    New schedule
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="calendar"></div>
+                <div class="row">
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- New Schedule modal -->
+<div class="modal" tabindex="-1" role="dialog" id="new-schedule-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> New Schedule <span id="mdl_client_name"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inp-mdl-client">Client</label>
+                            <select class="form-select" id="inp-mdl-client">
+                                <option value="" selected>-- Select --</option>
+                                @{
+                                    if (Model.ClientsList != null)
+                                    {
+                                        foreach (var e in Model.ClientsList)
+                                        {
+                                            <option value="@e.Id.ToString()">@e.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inp-mdl-staff">Staff</label>
+                            <select class="form-select" id="inp-mdl-staff">
+                                <option value="" selected>-- Select --</option>
+                                @{
+                                    if(Model.EmployeesList != null)
+                                    {
+                                        foreach (var e in Model.EmployeesList)
+                                        {
+                                            <option value="@e.Id.ToString()">@e.Name</option>
+                                        }
+                                    }
+                                }                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @*  <label class="form-label">Start Date:</label>
+                        <input type="date" class="form-control"> *@
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inp-mdl-startdate">Start Date</label>
+                            <input id="inp-mdl-startdate" type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inp-mdl-enddate">End Date</label>
+                            <input id="inp-mdl-enddate" type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-mdl-save-newshift" class="btn btn-outline-success px-2"><i class='bx bx-save'></i>Save</button>
+                <button type="button" class="btn btn-outline-danger px-2" data-bs-dismiss="modal"><i class='bx bx-window-close'></i>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
 
 @section Scripts {
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>

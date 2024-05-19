@@ -53,114 +53,167 @@ function ScheduleInfo() {
     };
 }
 
-function generateTime(schedule, renderStart, renderEnd) {
-    var startDate = moment(renderStart.getTime())
-    var endDate = moment(renderEnd.getTime());
+function generateTime(schedule, startTime, endTime) {
+    var startDate = moment(startTime)
+    var endDate = moment(endTime);
     var diffDate = endDate.diff(startDate, 'days');
+        
+    schedule.isAllday = true;
+    schedule.category = 'allday';
 
-    schedule.isAllday = chance.bool({likelihood: 30});
-    if (schedule.isAllday) {
-        schedule.category = 'allday';
-    } else if (chance.bool({likelihood: 30})) {
-        schedule.category = SCHEDULE_CATEGORY[chance.integer({min: 0, max: 1})];
-        if (schedule.category === SCHEDULE_CATEGORY[1]) {
-            schedule.dueDateClass = 'morning';
-        }
-    } else {
-        schedule.category = 'time';
-    }
-
-    startDate.add(chance.integer({min: 0, max: diffDate}), 'days');
-    startDate.hours(chance.integer({min: 0, max: 23}))
-    startDate.minutes(chance.bool() ? 0 : 30);
     schedule.start = startDate.toDate();
-
-    endDate = moment(startDate);
-    if (schedule.isAllday) {
-        endDate.add(chance.integer({min: 0, max: 3}), 'days');
-    }
-
-    schedule.end = endDate
-        .add(chance.integer({min: 1, max: 4}), 'hour')
-        .toDate();
-
-    if (!schedule.isAllday && chance.bool({likelihood: 20})) {
-        schedule.goingDuration = chance.integer({min: 30, max: 120});
-        schedule.comingDuration = chance.integer({min: 30, max: 120});;
-
-        if (chance.bool({likelihood: 50})) {
-            schedule.end = schedule.start;
-        }
-    }
+    schedule.end = endDate.toDate();
+        
 }
 
-function generateNames() {
-    var names = [];
-    var i = 0;
-    var length = chance.integer({min: 1, max: 10});
+//function generateTime_Old(schedule, renderStart, renderEnd) {
+//    var startDate = moment(renderStart.getTime())
+//    var endDate = moment(renderEnd.getTime());
+//    var diffDate = endDate.diff(startDate, 'days');
 
-    for (; i < length; i += 1) {
-        names.push(chance.name());
-    }
+//    console.log('startDate:' + startDate);
+//    console.log('endDate:' + endDate);
+//    console.log('diffDate:' + diffDate);
 
-    return names;
-}
+//    schedule.isAllday = true; // chance.bool({likelihood: 30});
+//    if (schedule.isAllday) {
+//        schedule.category = 'allday';
+//    } else if (chance.bool({likelihood: 30})) {
+//        schedule.category = SCHEDULE_CATEGORY[chance.integer({min: 0, max: 1})];
+//        if (schedule.category === SCHEDULE_CATEGORY[1]) {
+//            schedule.dueDateClass = 'morning';
+//        }
+//    } else {
+//        schedule.category = 'time';
+//    }
 
-function generateRandomSchedule(calendar, renderStart, renderEnd) {
-    var schedule = new ScheduleInfo();
+//    startDate.add(chance.integer({min: 0, max: diffDate}), 'days');
+//    startDate.hours(chance.integer({min: 0, max: 23}))
+//    startDate.minutes(chance.bool() ? 0 : 30);
+//    schedule.start = startDate.toDate();
 
-    schedule.id = chance.guid();
-    schedule.calendarId = calendar.id;
+//    endDate = moment(startDate);
+//    if (schedule.isAllday) {
+//        endDate.add(chance.integer({min: 0, max: 3}), 'days');
+//    }
 
-    schedule.title = chance.sentence({words: 3});
-    schedule.body = chance.bool({likelihood: 20}) ? chance.sentence({words: 10}) : '';
-    schedule.isReadOnly = chance.bool({likelihood: 20});
-    generateTime(schedule, renderStart, renderEnd);
+//    schedule.end = endDate
+//        .add(chance.integer({min: 1, max: 4}), 'hour')
+//        .toDate();
 
-    schedule.isPrivate = chance.bool({likelihood: 10});
-    schedule.location = chance.address();
-    schedule.attendees = chance.bool({likelihood: 70}) ? generateNames() : [];
-    schedule.recurrenceRule = chance.bool({likelihood: 20}) ? 'repeated events' : '';
-    schedule.state = chance.bool({likelihood: 20}) ? 'Free' : 'Busy';
-    schedule.color = calendar.color;
-    schedule.bgColor = calendar.bgColor;
-    schedule.dragBgColor = calendar.dragBgColor;
-    schedule.borderColor = calendar.borderColor;
+//    if (!schedule.isAllday && chance.bool({likelihood: 20})) {
+//        schedule.goingDuration = chance.integer({min: 30, max: 120});
+//        schedule.comingDuration = chance.integer({min: 30, max: 120});;
 
-    if (schedule.category === 'milestone') {
-        schedule.color = schedule.bgColor;
-        schedule.bgColor = 'transparent';
-        schedule.dragBgColor = 'transparent';
-        schedule.borderColor = 'transparent';
-    }
+//        if (chance.bool({likelihood: 50})) {
+//            schedule.end = schedule.start;
+//        }
+//    }
 
-    schedule.raw.memo = chance.sentence();
-    schedule.raw.creator.name = chance.name();
-    schedule.raw.creator.avatar = chance.avatar();
-    schedule.raw.creator.company = chance.company();
-    schedule.raw.creator.email = chance.email();
-    schedule.raw.creator.phone = chance.phone();
+//    console.log('schedule.start:' + schedule.start);
+//    console.log('schedule.end:' + schedule.end);
+//}
 
-    if (chance.bool({ likelihood: 20 })) {
-        var travelTime = chance.minute();
-        schedule.goingDuration = travelTime;
-        schedule.comingDuration = travelTime;
-    }
+function generateEmployeeSchedule(calendar, renderStart, renderEnd) {    
+    
+    var sdate = moment(renderStart.getTime()).format('YYYY-MM-DD'); 
+    var edate = moment(renderEnd.getTime()).format('YYYY-MM-DD');  
 
-    ScheduleList.push(schedule);
-}
-
-function generateSchedule(viewName, renderStart, renderEnd) {
-    ScheduleList = [];
-    CalendarList.forEach(function(calendar) {
-        var i = 0, length = 10;
-        if (viewName === 'month') {
-            length = 3;
-        } else if (viewName === 'day') {
-            length = 4;
-        }
-        for (; i < length; i += 1) {
-            generateRandomSchedule(calendar, renderStart, renderEnd);
-        }
+    return new Promise(function (resolve, reject) {
+        // Make AJAX call
+        $.ajax({
+            url: '/CAdminIndex?handler=SingleEmployeeShiftData',
+            type: 'GET',
+            data: {
+                empId: calendar.empid,
+                startDate: sdate,
+                endDate: edate
+            },
+            dataSrc: '',
+            success: function (data) {
+                // Resolve the promise when AJAX call succeeds
+               // console.log('call resolved:');
+                resolve(data);
+            },
+            error: function (xhr, status, error) {
+                // Reject the promise if AJAX call fails
+                //console.log('call error:')
+                reject(error);
+            }
+        });
     });
+}
+
+// Define a function that returns a Promise
+function processCalendar(calendar, renderStart, renderEnd) {
+    return new Promise(function (resolve, reject) {      
+        generateEmployeeSchedule(calendar, renderStart, renderEnd).then(function (data) {
+            // Code to execute after the AJAX call finishes successfully
+            //console.log('AJAX call finished successfully with data:', data);
+            if (data != null) {
+                data.forEach(function (item) {
+                    var schedule = new ScheduleInfo();
+                    schedule.id = item.id;
+                    schedule.calendarId = calendar.id;
+
+                    schedule.title = item.clients.name;
+                    schedule.body = '';
+                    schedule.isReadOnly = false;
+                    //generateTime(schedule, renderStart, renderEnd);
+
+                    generateTime(schedule, item.startTime, item.endTime);
+
+                    //schedule.start = item.startTime;
+                    //schedule.end = item.endTime;
+
+                    schedule.isPrivate = true;
+                    schedule.location = 'no address';
+                    schedule.attendees = [];
+                    schedule.recurrenceRule = 'repeated events';
+                    schedule.state = 'Busy';
+                    schedule.color = calendar.color;
+                    schedule.bgColor = calendar.bgColor;
+                    schedule.dragBgColor = calendar.dragBgColor;
+                    schedule.borderColor = calendar.borderColor;
+
+                    if (schedule.category === 'milestone') {
+                        schedule.color = schedule.bgColor;
+                        schedule.bgColor = 'transparent';
+                        schedule.dragBgColor = 'transparent';
+                        schedule.borderColor = 'transparent';
+                    }
+
+                    //schedule.raw.memo = chance.sentence();
+                    schedule.raw.creator.name = item.clients.name;
+                    //schedule.raw.creator.avatar = chance.avatar();
+                    //schedule.raw.creator.company = chance.company();
+                    //schedule.raw.creator.email = chance.email();
+                    //schedule.raw.creator.phone = chance.phone();
+
+                    //if (chance.bool({ likelihood: 20 })) {
+                    //    var travelTime = chance.minute();
+                    //    schedule.goingDuration = travelTime;
+                    //    schedule.comingDuration = travelTime;
+                    //}
+
+                    ScheduleList.push(schedule);
+                });
+
+            }
+            resolve();
+        }).catch(function (error) {
+            // Code to handle errors if the AJAX call fails
+           // console.error('AJAX call failed:', error);
+            reject();
+        });
+    });
+}
+
+// Create an async function to iterate over the CalendarList
+async function generateSchedule(viewName, renderStart, renderEnd) {
+    ScheduleList = [];
+    for (const calendar of CalendarList) {
+        // Wait for the processing of the current calendar to complete
+        await processCalendar(calendar, renderStart, renderEnd);
+    }
 }

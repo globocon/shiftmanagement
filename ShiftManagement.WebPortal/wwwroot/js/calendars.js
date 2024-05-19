@@ -6,6 +6,7 @@ var CalendarList = [];
 
 function CalendarInfo() {
     this.id = null;
+    this.empid = null;
     this.name = null;
     this.checked = true;
     this.color = null;

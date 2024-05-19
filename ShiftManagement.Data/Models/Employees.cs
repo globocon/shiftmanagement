@@ -19,8 +19,9 @@ namespace ShiftManagement.Data.Models
 		public DateTime? DOJ { get; set; }
 		public DateTime? CreatedDateTime { get; set; }
 		public string? ImageExtn { get; set; }
-
-
+		public bool IsDeleted { get; set; }
+		public DateTime? DeletionDate { get; set; }
+	
 		[NotMapped]
 		public string FormattedDOB { get { return DOB.HasValue ? DOB.Value.ToString("dd-MMM-yyyy") : string.Empty; } }
 		[NotMapped]
@@ -28,7 +29,7 @@ namespace ShiftManagement.Data.Models
 		[NotMapped]
 		public string GenderDesc { get
 			{
-				if(Gender != string.Empty)
+				if(Gender != string.Empty && Gender !=null)
 				{
 					if (Gender.Equals("M"))
 						return "Male";

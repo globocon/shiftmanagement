@@ -54,5 +54,105 @@ namespace ShiftManagement.WebPortal.Pages
 
 			return new JsonResult(new { ShiftData, startDate = startDate.ToString("dd/MM/yyyy"), endDate = endDate.ToString("dd/MM/yyyy") });
 		}
+		public JsonResult OnPostDeleteClientDetails(int id)
+		{
+			var success = false;
+			var message = "Unable to delete client. Invalid client id.";
+			try
+			{
+
+				_clientDataProvider.DeleteClientDetails(id);
+
+				message = "client '" + id + "' marked for deletion !!!";
+				success = true;
+				ClientsList = _clientDataProvider.GetClientsList();
+			}
+			catch (Exception ex)
+			{
+				message = ex.Message;
+			}
+
+			return new JsonResult(new { success, message });
+		}
+		public JsonResult OnPostSaveUpdateClientDetails(Clients record)
+		{
+
+			try
+			{
+
+				int success = _clientDataProvider.SaveOrUpdateClientDetails(record);
+
+				if (success == 1)
+				{
+					return new JsonResult(new { success = true, message = "Client details updated." });
+				}
+				else if (success == 2)
+				{
+					return new JsonResult(new { success = false, message = "Client details added." });
+				}
+				else
+				{
+					return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
+				}
+			}
+			catch (Exception ex)
+			{
+				// Log the exception
+				return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
+			}
+		}
+		public JsonResult OnPostDeleteEmployeeDetails(int id)
+		{
+			var success = false;
+			var message = "Unable to delete Employee. Invalid Employee id.";
+			try
+			{
+
+				_employeeDataProvider.DeleteEmployeeDetails(id);
+
+				message = "Employee '" + id + "' marked for deletion !!!";
+				success = true;
+
+			}
+			catch (Exception ex)
+			{
+				message = ex.Message;
+			}
+
+			return new JsonResult(new { success, message });
+		}
+		public JsonResult OnPostSaveUpdateEmployeeDetails(Employees record)
+		{
+
+			try
+			{
+
+				int success = _employeeDataProvider.SaveOrUpdateEmployeeDetails(record);
+
+				if (success == 1)
+				{
+					return new JsonResult(new { success = true, message = "Employee details updated." });
+				}
+				else if (success == 2)
+				{
+					return new JsonResult(new { success = false, message = "Employee details added." });
+				}
+				else
+				{
+					return new JsonResult(new { success = false, message = "An error occurred while updating Employee details." });
+				}
+			}
+			catch (Exception ex)
+			{
+				// Log the exception
+				return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
+			}
+		}
+		public PartialViewResult OnGetEmployeeProfileSettings(int employeeId)
+		{
+			var Employee = _employeeDataProvider.GetEmployeesById(employeeId);
+			Employee ??= new Employees() { };
+			return Partial("_employeeProfile", Employee);
+		}
 	}
 }

@@ -3,27 +3,44 @@ $(function () {
 
     new PerfectScrollbar('.customers-list');
 
-    $('.deleteclient').on('click', function () {
+    $(document).on('click', '.deleteclient', function () {
         const btn = $(this);
-        const clientId = btn.attr('data-clientid');
-        const clientName = btn.attr('data-clientname');
-        if (confirm('Are you sure to delete client "' + clientName + '" ?')) {
-
-            alert('client ' + clientName + ' marked for deletion !!!');
-
-            //$.ajax({
-            //    url: '/Admin/Settings?handler=ShowPassword',
-            //    data: { id: userId },
-            //    type: 'POST',
-            //    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
-            //}).done(function (data) {
-            //    spanElem.text(data);
-            //    btn.hide();
-            //}).fail(function () {
-            //    console.log('error')
-            //});
-        }
+        const clientId = btn.data('clientid');
+        const clientName = btn.data('clientname');
+        $('#inpClientidDeleteConfirmModal').val(clientId);
+        $('#msgDeleteConfirmModal').html('Are you sure to delete client "' + clientName + '" ?');
+        $('#DeleteConfirmModal').modal('show');
     });
+    $('#btnDeleteConfirmModal').on('click', function () {
+        var clientToDeleteId = $('#inpClientidDeleteConfirmModal').val();
+        $('#DeleteConfirmModal').modal('hide');
+        deleteClient(clientToDeleteId);
+    });
+    // alert('client ' + clientName + ' marked for deletion !!!');
+
+
+    $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
+        $('#inpClientidDeleteConfirmModal').val('');
+    });
+
+    function deleteClient(clientToDeleteId) {
+        $.ajax({
+            url: '/CAdminIndex?handler=DeleteClientDetails',
+            data: { id: clientToDeleteId },
+            type: 'POST',
+            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+        }).done(function (data) {
+            if (data.success) {
+                //Dttbl_role_settings_MR.ajax.reload();
+                showSuccessModalSmall("Delete Client", data.message);
+            }
+            else {
+                showErrorModalSmall("Delete Client", data.message);
+            }
+        }).fail(function () {
+            console.log('error');
+        });
+    }      
 
     $('.viewclient').on('click', function () {
         const btn = $(this);
@@ -55,10 +72,126 @@ $(function () {
             // window.sharedVariable = button.data('cs-id');
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
-            // console.log(csnme);
+
+            // console.log(csnme);    
+            $('.btnsave_me').on('click', function (e) {
+                var data = {
+                    'id': csid,
+                    'Name': $('#Name').val(),
+                    'emails': $('#Emails').val(),
+                    'phone': $('#Phone').val(),
+                    'address': $('#Address').val(),
+                };
+                $.ajax({
+                    url: '/CAdminIndex?handler=SaveUpdateClientDetails',
+                    data: { record: data },
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                }).done(function (data) {
+                    if (data.success) {
+
+                        showSuccessModalSmall("Update Client", data.message);
+                    }
+                    else {
+                        showErrorModalSmall("Update Client", data.message);
+                    }
+                }).fail(function () {
+                    console.log('error');
+                });
+            });
         });
     });
 
+
+    $('#employee-profile-modal').on('show.bs.modal', function (event) {
+        $('#div_employee_settings').html('');         
+            
+        const button = $(event.relatedTarget);
+        const empId = button.data('id');// $(this).data('name')
+        const empName = button.data('name');
+        $('#mdl_employee_name').text(empName)
+        if (empId != 0 && empId != null) {
+            if (button.attr('id') == "btnDeleteStaff") {
+                $('#employee-profile-modal').modal('hide');
+                $('#inpClientidDeleteConfirmModal').val(empId);
+                $('#msgDeleteConfirmModal').html('Are you sure to delete this employee ?');
+                $('#DeleteConfirmModal').modal('show');
+            }
+            else if (button.attr('id') === "btnEditStaff" || button.attr('id') === "btnViewStaff" || button.attr('id') === "btnSaveStaff") {
+                //if (button.attr('id') === "btnSaveStaff") 
+                //{
+                //    const btn = $(this);
+                //    const clientId = btn.attr('data-clientid');
+                //    const clientName = btn.attr('data-clientname');
+                //    $('#hinp_client_profile_modal_clientid').val('');
+                //    $('#hinp_client_profile_modal_clientname').val('');
+                //    $('#client-profile-modal').modal('show');
+                //}
+              
+           
+                 $('#div_employee_profile_settings').load('/CAdminIndex?handler=EmployeeProfileSettings&EmployeeId=' + empId, function () {
+           
+                     $('.btnsave_employee').on('click', function (e) {
+                         var data = {
+                             'id': empId,
+                             'Name': $('#Name').val(),
+                             'phone': $('#Phone').val(),
+                             'DOB': $('#DOB').val(),
+                             'DOJ': $('#DOJ').val(),
+                         };
+                         $.ajax({
+                             url: '/CAdminIndex?handler=SaveUpdateEmployeeDetails',
+                             data: { record: data },
+                             type: 'POST',
+                             headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                         }).done(function (data) {
+                             if (data.success) {
+
+                                 showSuccessModalSmall("Update Employee", data.message);
+                             }
+                             else {
+                                 showErrorModalSmall("Update Employee", data.message);
+                             }
+                         }).fail(function () {
+                             console.log('error');
+                         });
+                     });
+        
+                 });
+             }
+            
+            $('#btnDeleteConfirmModal').on('click', function () {
+              
+                var employeeToDeleteId = $('#inpClientidDeleteConfirmModal').val();
+                $('#DeleteConfirmModal').modal('hide');
+                deleteClient(employeeToDeleteId);
+            });
+
+            $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
+                $('#inpClientidDeleteConfirmModal').val('');
+            });
+
+            function deleteClient(employeeToDeleteId) {
+                $.ajax({
+                    url: '/CAdminIndex?handler=DeleteEmployeeDetails',
+                    data: { id: employeeToDeleteId },
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                }).done(function (data) {
+                    if (data.success) {
+                        //Dttbl_role_settings_MR.ajax.reload();
+                        showSuccessModalSmall("Delete Employee", data.message);
+                    }
+                    else {
+                        showErrorModalSmall("Delete Employee", data.message);
+                    }
+                }).fail(function () {
+                    console.log('error');
+                });
+            }      
+        }
+    });
+       
     let Dttbl_staffTable = $('#staffTable').DataTable({
         lengthMenu: [[5, 10, 25, 50, 100, 1000], [5, 10, 25, 50, 100, 1000]],
         paging: true,
@@ -76,7 +209,7 @@ $(function () {
             dataSrc: ''
         },
         columns: [
-            { data: 'id', visible: false, title:'StaffId' },
+            { data: 'id', visible: false },
             {
                 data: 'name', title:'Name',
                 "render": function (data, type, row) {
@@ -126,8 +259,63 @@ $(function () {
             //    }               
 
             //},
-        ],
+            {
+                targets: -1,
+                orderable: false,
+                width: '4%',
+                data: 'id',
+                "render": function (data, type, row) {
+
+                    var rtn = '<div class="d-flex order-actions text-center">' +
+                        '<button type="button" class="btn btn-outline-primary mr-2" id="btnViewStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="' + data + '" data-name="' + row.name + '"><i class="fa fa-eye mr-2"></i></button>' +
+                        '<button type="button" class="btn btn-outline-primary mr-2" id="btnEditStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="' + data + '" "><i class="fa fa-pencil mr-2"></i></button>' +
+                        '<button type="button" class="btn btn-outline-primary mr-2" id="btnEditStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="x" "><i class="fa fa-save mr-2"></i></button>' +
+                        '<button type="button" class="btn btn-sm btn-outline-primary px-2 mx-2" data-id="' + data + '"  id="btnDeleteStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" ><i class="fa fa-trash mr-2"></i></button>' +
+               
+                   '</div>';
+                    return rtn;
+                }
+
+            }
+       ],
     });
+    //function viewStaff(id) {
+    //    //var id = element.getAttribute('data-id'); // Get the id from the data attribute of the clicked element
+
+    //    // Ajax request to retrieve staff information
+    //    $.ajax({
+    //        url: '/CAdminIndex?handler=EmployeeProfileSettings',
+    //        data: { id: id },
+    //        type: 'GET',
+    //        dataType: 'json'
+    //    }).done(function (data) {
+    //        // Redirect to the URL received in the response data
+    //        window.location.href = data;
+    //    }).fail(function (jqXHR, textStatus, errorThrown) {
+    //        // Handle any errors that occur during the Ajax request
+    //        console.error("Error fetching staff information:", textStatus, errorThrown);
+    //    });
+    //}
+
+    //var viewStaff = function (id) {
+    ////   // alert("hi");
+    ////    const btn = $(this);
+    ////    const employeeId = btn.attr('data-employeeid');
+    ////    const employeeName = btn.attr('data-employeename');
+    ////    $('#hinp_employee_profile_modal_employeeid').val(employeeId);
+    ////    $('#hinp_employee_profile_modal_employeename').val(employeeName);
+    ////    $('#employee-profile-modal').modal('show');
+    //    $.ajax({
+    //        url: '/CAdminIndex?handler=EmployeeProfileSettings',
+    //        data: { id: parseInt(id) },
+    //        type: 'GET',
+    //        dataType: 'json'
+    //    }).done(function (data) {
+    //        window.location.href = data;
+    //    });
+    //}
+
+   
 
     let shiftDataToDisplayDate = new Date();
     let shiftDataToDisplayDateString = convertDateFormat(shiftDataToDisplayDate, 'yyyy-MM-dd');

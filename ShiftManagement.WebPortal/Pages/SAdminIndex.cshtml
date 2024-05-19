@@ -18,7 +18,9 @@
             <div class="customers-list p-3 mb-3">
 
                 @{
+
                     foreach (var cl in Model.CompanyList)
+
                     {
                         var companyimg = "/images/Company/Noimage.png";
                         if (cl.ImageExtn != null)
@@ -41,6 +43,7 @@
                                 <!-- <a href="javascript:;" class="list-inline-item text-primary border-primary viewcompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='fa fa-eye'></i></a> -->
                                 <a href="javascript:;" class="list-inline-item text-primary border-primary editcompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='bx bxs-pencil'></i></a>
                                 <a href="javascript:;" class="list-inline-item text-danger border-danger deletecompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='bx bx-trash'></i></a>
+
                             </div>
                         </div>
                     }
@@ -95,18 +98,57 @@
     </div>
 </div>
 
+
 <!-- Client Profile settings modal -->
 <div class="modal" tabindex="-1" role="dialog" id="company-profile-modal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> View/Edit Settings for <span id="mdl_client_name"></span></h5>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-light">
                 <input type="hidden" id="hinp_client_profile_modal_clientid" />
                 <input type="hidden" id="hinp_client_profile_modal_clientname" />
                 <div id="div_client_profile_settings"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Client Profile settings Edit modal -->
+<div class="modal" tabindex="-1" role="dialog" id="client-profile-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> Edit Settings for <span id="mdl_client_name"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <input type="hidden" id="hinp_client_profile_modal_clientid" />
+                <input type="hidden" id="hinp_client_profile_modal_clientname" />
+                <div id="div_client_profile_settings"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="DeleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div>
+                <input id="inpClientidDeleteConfirmModal" class="d-none" />
+            </div>
+            <div class="modal-body">
+                <p id="msgDeleteConfirmModal"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnDeleteConfirmModal" class="btn btn-success">Confirm</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

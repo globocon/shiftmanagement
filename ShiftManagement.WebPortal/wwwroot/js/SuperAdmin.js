@@ -90,7 +90,33 @@ $(function () {
         const companyName = btn.attr('data-companyname');
         var qus = 'Are you sure to delete company "' + companyName + '" ?';
         confirm_with_callback(qus, companyId, deleteCompany);
+
     });
+    // alert('client ' + clientName + ' marked for deletion !!!');
+
+
+$("#DeleteConfirmModal").on("hidden.bs.modal", function () {
+    $('#inpClientidDeleteConfirmModal').val('');
+});
+
+    function deleteClient(clientToDeleteId) {
+        $.ajax({
+            url: '/SAdminIndex?handler=DeleteClientDetails',
+            data: { id: clientToDeleteId },
+            type: 'POST',
+            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+        }).done(function (data) {
+            if (data.success) {
+                //Dttbl_role_settings_MR.ajax.reload();
+                showSuccessModalSmall("Delete Client", data.message);
+            }
+            else {
+                showErrorModalSmall("Delete Client", data.message);
+            }
+        }).fail(function () {
+            console.log('error');
+        });
+    }      
 
     function deleteCompany(companyId) {
         $.ajax({
@@ -115,8 +141,48 @@ $(function () {
         const clientName = btn.attr('data-clientname');       
         $('#hinp_client_profile_modal_clientid').val(clientId);
         $('#hinp_client_profile_modal_clientname').val(clientName);
-        $('#client-profile-modal').modal('show');       
+        $('#client-profile-modal').modal('show'); 
+        // Disable all interactive elements within the modal
+        $('#client-profile-modal :input').prop('disabled', true);
+        // Disable all input elements within the modal
+        $('#client-profile-modal input').prop('disabled', true);
+
     });
+    $('.saveclient').on('click', function () {
+        const btn = $(this);
+        const clientId = btn.attr('data-clientid');
+        const clientName = btn.attr('data-clientname');
+        $('#hinp_client_profile_modal_clientid').val('');
+        $('#hinp_client_profile_modal_clientname').val('');
+        $('#client-profile-modal').modal('show');
+        if (clientName.trim() === '') {
+            alert('Please provide a client name.');
+            return;
+        }
+       
+    }); 
+     
+    //function saveClient(clientId, clientName) {
+    //    //  AJAX call to save client details
+    //    $.ajax({
+    //        url: '/SAdminIndex?handler=SaveClientDetails',
+    //        data: { id: clientId, name: clientName },
+    //        type: 'POST',
+    //        headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+    //    }).done(function (data) {
+    //        if (data.success) {
+    //            // Show success message
+    //            showSuccessModalSmall("Save Client", data.message);
+    //            $('#clientNameElement').text(clientName);
+    //        }
+    //        else {
+    //            // Show error message if save fails
+    //            showErrorModalSmall("Save Client", data.message);
+    //        }
+    //    }).fail(function () {
+    //        console.log('error');
+    //    });
+    //}
 
     $('.editcompany').on('click', function () {
         const btn = $(this);
@@ -125,6 +191,7 @@ $(function () {
         $('#hinp_client_profile_modal_clientid').val(clientId);
         $('#hinp_client_profile_modal_clientname').val(clientName);
         $('#client-profile-modal').modal('show');
+        
     });
 
 
@@ -140,7 +207,39 @@ $(function () {
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
             // console.log(csnme);    
+            $('.btnsave_me').on('click', function (e) {
+                var data = {
+                    'id':csid,
+                    'Name': $('#Name').val(),
+                    'emails': $('#Emails').val(),
+                    'phone': $('#Phone').val(),
+                    'address': $('#Address').val(),
+                };
+                    $.ajax({
+                        url: '/SAdminIndex?handler=SaveUpdateClientDetails',
+                    data: { record: data },
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                }).done(function (data) {
+                    if (data.success) {
+                        
+                        showSuccessModalSmall("Update Client", data.message);
+                    }
+                    else {
+                        showErrorModalSmall("Update Client", data.message);
+                    }
+                }).fail(function () {
+                    console.log('error');
+                });
+            });
         });
-    });
+               
+
+          
+        });
+       
+   
 
 });
+
+

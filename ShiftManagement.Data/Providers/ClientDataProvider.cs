@@ -1,4 +1,5 @@
-﻿using ShiftManagement.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShiftManagement.Data.Models;
 
 namespace ShiftManagement.Data.Providers
 {
@@ -8,42 +9,106 @@ namespace ShiftManagement.Data.Providers
         public List<Clients> GetClientsList();
         public Clients GetClientsById(int id);
         void DeleteClientDetails(int id);
-
         public List<Clients> GetClientsListForCompanyAdmin(Guid UserID);
-    }
+
+		
+		// Task<bool> SaveClientDetailsAsync(int id, string name);
+		int SaveOrUpdateClientDetails(Clients record);
+		
+		
+	}
+
     public class ClientDataProvider : IClientDataProvider
-	{
+    {
         private readonly ShiftDbContext _context;
         public ClientDataProvider(ShiftDbContext context)
         {
             _context = context;
 
         }
-                
+
         public List<Clients> GetClientsList()
         {
-            return _context.Clients.Where(x=> x.IsDeleted == false).OrderBy(x => x.Name).ToList();
+            return _context.Clients.Where(x => x.IsDeleted == false).OrderBy(x => x.Name).ToList();
         }
 
-		public Clients GetClientsById(int id)
+        public Clients GetClientsById(int id)
         {
-			return _context.Clients.Where(x => x.IsDeleted == false && x.Id == id).SingleOrDefault();
-		}
+            return _context.Clients.Where(x => x.IsDeleted == false && x.Id == id).SingleOrDefault();
+        }
+        //public async Task<bool> SaveClientDetailsAsync(int id, string name)
+        //{
+        //    try
+        //    {
+        //        // Retrieve the client from the database
+        //        var client = await _context.Clients.FindAsync(id);
 
-        public void DeleteClientDetails(int id)
+        //        if (client != null)
+        //        {
+        //            // Update the client name
+        //            client.Name = name;
+
+        //            // Save changes to the database
+        //            await _context.SaveChangesAsync();
+
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            // Client not found
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception
+
+        //        Console.WriteLine($"Error saving client details: {ex.Message}");
+        //        return false;
+        //    }
+        //}
+		public int SaveOrUpdateClientDetails(Clients record)
+		{
+			int saveStatus = 0;
+			
+            var clientUpdate = _context.Clients.Where(x => x.Id == record.Id && x.Name == record.Name).SingleOrDefault();
+			if (clientUpdate == null)
+			{
+                record.CreationDate = DateTime.Now;
+				_context.Add(record);
+				saveStatus = 1;
+			}
+			else
+			{
+				clientUpdate.Emails = record.Emails;
+				clientUpdate.Address = record.Address;
+				clientUpdate.Phone = record.Phone;
+                saveStatus = 2;
+			}
+			_context.SaveChanges();
+			return saveStatus;
+		}
+        	
+	
+		public void DeleteClientDetails(int id)
         {
             if (id == -1)
                 return;
 
-            var ClientsDetailsToDelete = _context.Clients.SingleOrDefault(x => x.Id == id);
-            if (ClientsDetailsToDelete == null)
-                throw new InvalidOperationException();
 
-            ClientsDetailsToDelete.Status = 0;
-            ClientsDetailsToDelete.IsDeleted = true;
+            var clientToDelete = _context.Clients.Where(x => x.Id == id).SingleOrDefault();
+            if (clientToDelete != null)
+            {
 
-			_context.SaveChanges();
+
+                clientToDelete.IsDeleted = true;
+                clientToDelete.DeletionDate = DateTime.Now;
+                _context.SaveChanges();
+
+
+            }
         }
+
 
         public List<Clients> GetClientsListForCompanyAdmin(Guid UserID)
         {
@@ -53,3 +118,4 @@ namespace ShiftManagement.Data.Providers
         }
     }
 }
+

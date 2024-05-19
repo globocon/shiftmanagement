@@ -17,7 +17,9 @@ namespace ShiftManagement.Data.Providers
         bool DeleteShift(int sdId, out string msg);
     }
 
-    public class ShiftDataProvider : IShiftDataProvider
+
+
+    public class ShiftDataProvider: IShiftDataProvider
     {
         public readonly ShiftDbContext _context;
         public ShiftDataProvider(ShiftDbContext context)
@@ -129,7 +131,8 @@ namespace ShiftManagement.Data.Providers
             }
 
             return issuccess;
-        }
+        }    
+
     }
 
 }

@@ -71,6 +71,11 @@ namespace ShiftManagement.WebPortal.Services
             else
                 claims.Add(new Claim(type: "Eid", value: string.Empty));
 
+            if (user.CompanyId != null)
+                claims.Add(new Claim(type: "CompanyId", value: user.CompanyId.ToString()));
+            else
+                claims.Add(new Claim(type: "CompanyId", value: string.Empty));
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties

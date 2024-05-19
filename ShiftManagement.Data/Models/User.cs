@@ -38,6 +38,7 @@ namespace ShiftManagement.Data.Models
         public DateTime? ActivateDate { get; set; }
         public DateTime? DeletionDate { get; set; }
         public string? ImageExtn { get; set; }
+        public Guid? CompanyId { get; set; }
     }
 
     public class UserSignUp

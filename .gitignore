@@ -371,3 +371,6 @@ FodyWeavers.xsd
 /ShiftManagement.Common/obj/Debug/net6.0/ShiftManagement.Common.AssemblyInfoInputs.cache
 /ShiftManagement.Common/obj/Debug/net6.0/ShiftManagement.Common.AssemblyInfo.cs
 /ShiftManagement.Data/bin/Debug/net6.0/ShiftManagement.Data.pdb
+/ShiftManagement.WebPortal/ShiftManagement.WebPortal.csproj.user
+/ShiftManagement.WebPortal/ShiftManagement.WebPortal.csproj
+/ShiftManagement.WebPortal/.config/dotnet-tools.json

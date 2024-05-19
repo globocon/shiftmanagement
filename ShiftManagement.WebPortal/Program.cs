@@ -16,6 +16,7 @@ builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService
 builder.Services.AddScoped<IEmployeeDataProvider, EmployeeDataProvider>();
 builder.Services.AddScoped<IClientDataProvider, ClientDataProvider>();
 builder.Services.AddScoped<IShiftDataProvider, ShiftDataProvider>();
+builder.Services.AddScoped<ICompanyDataProvider, CompanyDataProvider>();
 builder.Services.AddSession();
 builder.Services.AddRazorPages(options =>
 {
@@ -51,6 +52,9 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+app.MapControllerRoute(name: "clients",
+                pattern: "client/{*clientpage}",
+                defaults: new { controller = "clients", action = "clientpage" });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

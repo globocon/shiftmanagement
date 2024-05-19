@@ -54,6 +54,14 @@ namespace ShiftManagement.WebPortal.Pages
 
 			return new JsonResult(new { ShiftData, startDate = startDate.ToString("dd/MM/yyyy"), endDate = endDate.ToString("dd/MM/yyyy") });
 		}
+
+    public IActionResult OnGetSingleEmployeeShiftData(int empId,DateTime startDate, DateTime endDate)
+    {
+        //List<ShiftDetail> ShiftData = new List<ShiftDetail>();            
+        var ShiftData = _shiftDataProvider.GetEmployeeShiftDataForTheWeek(empId, startDate, endDate);
+        return new JsonResult(ShiftData);
+    }
+
 		public JsonResult OnPostDeleteClientDetails(int id)
 		{
 			var success = false;

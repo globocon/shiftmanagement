@@ -8,58 +8,104 @@
     <div class="col-12 col-xl-12 d-flex">
         <div class="card radius-10 w-100">
             <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h5 class="mb-0">Clients (Super Admin View)</h5>
-                    </div>
-                    <div class="font-22 ms-auto">
-                        <i class='bx bx-dots-horizontal-rounded'></i>
-                    </div>
+                <div class="row">
+                    <h5 class="mb-0 col-md-9">Company (Super Admin View)</h5>
+                    <button id="add-new-company" class="btn btn-sm btn-success pull-right col-md-2"><i class="fa fa-plus me-2"></i>Add Company</button>
                 </div>
+                <hr />
             </div>
-            <div class="customers-list p-3 mb-3">              
+
+            <div class="customers-list p-3 mb-3">
 
                 @{
 
-                    foreach (var cl in Model.ClientsList)
+                    foreach (var cl in Model.CompanyList)
+
                     {
-                        var clientimg = "/images/clients/Noimage2.png";
+                        var companyimg = "/images/Company/Noimage.png";
                         if (cl.ImageExtn != null)
                         {
-                            var pth = System.IO.Path.Combine(WebHostEnvironment.WebRootPath, "images\\clients\\" + cl.Id.ToString() + cl.ImageExtn);
+                            var pth = System.IO.Path.Combine(WebHostEnvironment.WebRootPath, "images\\Company\\" + cl.Id.ToString() + cl.ImageExtn);
                             if (System.IO.File.Exists(pth))
                             {
-                                clientimg = "/images/clients/" + cl.Id.ToString() + cl.ImageExtn;
+                                companyimg = "/images/Company/" + cl.Id.ToString() + cl.ImageExtn;
                             }
                         }
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src=@clientimg class="rounded-circle" width="46" height="46" alt="clientImage_@cl.Id.ToString()" asp-append-version="true" />
+                                <img src=@companyimg class="rounded-circle" width="46" height="46" alt="companyImage_@cl.Id.ToString()" asp-append-version="true" />
                             </div>
                             <div class="ms-2">
-                                <h6 class="mb-1 font-14">@cl.Name</h6>
-                                <p class="mb-0 font-13 text-secondary">@cl.Emails</p>
+                                <h6 class="mb-1 font-14">@cl.CompanyName</h6>
+                                <p class="mb-0 font-13 text-secondary">@cl.CompanyNameID</p>
                             </div>
                             <div class="list-inline d-flex customers-contacts ms-auto">
-                                <a href="javascript:;" class="list-inline-item text-primary border-primary viewclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='fa fa-eye'></i></a>
-                                <a href="javascript:;" class="list-inline-item text-primary border-primary saveclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='fa fa-save'></i></a>
-                                <a href="javascript:;" class="list-inline-item text-primary border-primary editclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bxs-pencil'></i></a>
-                                <a href="javascript:;" class="list-inline-item text-danger border-danger deleteclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bx-trash'></i></a>
+                                <!-- <a href="javascript:;" class="list-inline-item text-primary border-primary viewcompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='fa fa-eye'></i></a> -->
+                                <a href="javascript:;" class="list-inline-item text-primary border-primary editcompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='bx bxs-pencil'></i></a>
+                                <a href="javascript:;" class="list-inline-item text-danger border-danger deletecompany" data-companyid="@cl.Id.ToString()" data-companyname="@cl.CompanyName"><i class='bx bx-trash'></i></a>
+
                             </div>
                         </div>
                     }
-                }               
+                }
             </div>
         </div>
     </div>
 </div>
 
-<!-- Client Profile View settings modal -->
-<div class="modal" tabindex="-1" role="dialog" id="client-profile-modal" data-backdrop="static" data-keyboard="false">
+<!-- New Company modal -->
+<div class="modal" tabindex="-1" role="dialog" id="add-new-company-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-building-o" aria-hidden="true"></i> New Company</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmNewCompany" name="frmNewCompany" class="row needs-validation" novalidate>
+                    <input type="hidden" asp-for="@Model.newCompany.Id" />
+                    <input type="hidden" asp-for="@Model.newCompany.IsDeleted" />
+                    <input type="hidden" asp-for="@Model.newCompany.IsMasterCompany" />
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Company Name</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <input asp-for="@Model.newCompany.CompanyName" class="form-control" value="@Model.newCompany.CompanyName" required />
+                            <div class="invalid-feedback">Company name is required.</div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Company ID</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <input asp-for="@Model.newCompany.CompanyNameID" class="form-control" value="@Model.newCompany.CompanyNameID" required />
+                            <div class="invalid-feedback">Company ID is required.</div>
+                        </div>
+                        <span id="mdl-add-new-company-checkId-available" class="text-center">.</span>
+                    </div>
+                    <div class="row g-3">
+                        <span asp-validation-for="newCompany" class="text-danger d-none"></span>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="button" id="btn-mdl-add-new-company" class="btn btn-primary pull-right" value="Save" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Client Profile settings modal -->
+<div class="modal" tabindex="-1" role="dialog" id="company-profile-modal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> View Settings for <span id="mdl_client_name"></span></h5>               
+                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> View/Edit Settings for <span id="mdl_client_name"></span></h5>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-light">
@@ -108,8 +154,9 @@
     </div>
 </div>
 
+
 @Html.AntiForgeryToken()
 
-@section Scripts {   
+@section Scripts {
     <script src="~/js/superadmin.js"></script>
 }

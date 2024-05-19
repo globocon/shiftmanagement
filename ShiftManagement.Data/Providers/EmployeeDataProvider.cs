@@ -6,11 +6,14 @@ namespace ShiftManagement.Data.Providers
 	public interface IEmployeeDataProvider
 	{
 		List<Employees> GetEmployees();
+    List<Employees> GetEmployeesForCompanyAdmin(Guid UserId);
+
 		public Employees GetEmployeesById(int id);
 		void DeleteEmployeeDetails(int id);
 		
 		int SaveOrUpdateEmployeeDetails(Employees record);
 	}
+
 	public class EmployeeDataProvider: IEmployeeDataProvider
 	{
 		private readonly ShiftDbContext _context;
@@ -25,6 +28,13 @@ namespace ShiftManagement.Data.Providers
 			var rtn = _context.Employees.Where(x => x.IsDeleted == false).OrderBy(e => e.Name).ToList();
 			return rtn;
 		}
+
+    public List<Employees> GetEmployeesForCompanyAdmin(Guid UserId)
+    {            
+        var  rtn = _context.Employees.Where(m => _context.USR_Users.Any(a => a.Id == UserId && a.CompanyId == m.CompanyId)).OrderBy(x => x.Name).ToList();
+        return rtn;
+    }
+
 		public Employees  GetEmployeesById(int id)
 		{
 			return _context.Employees.Where(x => x.IsDeleted == false && x.Id == id).SingleOrDefault();
@@ -71,4 +81,5 @@ namespace ShiftManagement.Data.Providers
 			}
 		}
 	}
+
 }

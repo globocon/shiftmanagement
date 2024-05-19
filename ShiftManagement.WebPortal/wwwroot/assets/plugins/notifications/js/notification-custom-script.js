@@ -10,8 +10,9 @@
 
 function info_noti() {
 	Lobibox.notify('info', {
-		pauseDelayOnHover: true,
-		continueDelayOnInactiveTab: false,
+		delay: false,
+		//pauseDelayOnHover: true,
+		//continueDelayOnInactiveTab: false,
 		position: 'top right',
 		icon: 'bx bx-info-circle',
 		msg: 'Lorem ipsum dolor sit amet hears farmer indemnity inherent.'
@@ -166,7 +167,7 @@ function img_success_noti() {
 	});
 }
 /* Notifications With Images*/
-function pos1_default_noti() {
+function pos1_default_noti() {	
 	Lobibox.notify('default', {
 		pauseDelayOnHover: true,
 		continueDelayOnInactiveTab: false,
@@ -284,3 +285,4 @@ function anim5_noti() {
 		msg: 'Lorem ipsum dolor sit amet hears farmer indemnity inherent.'
 	});
 }
+

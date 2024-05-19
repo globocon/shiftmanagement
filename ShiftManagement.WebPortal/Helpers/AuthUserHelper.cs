@@ -13,19 +13,17 @@ namespace ShiftManagement.WebPortal.Helpers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public static int? LoggedInUserId
+        public static Guid LoggedInUserId
         {
             get
             {
-                int? userId = null;
+                string? userId = null;
                 var userClaims = _httpContextAccessor.HttpContext.User.Claims;
                 if (userClaims != null)
                 {
-                    //var isUserLoggedIn = userClaims.Single(x => x.Type == ClaimTypes.Role).Value == "User";
-                    //if (isUserLoggedIn)
-                        userId = int.Parse(userClaims.Single(x => x.Type == ClaimTypes.Sid).Value);
+                    userId = userClaims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
                 }
-                return userId;
+                return new Guid(userId);
             }
         }
 

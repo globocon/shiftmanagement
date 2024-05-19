@@ -19,6 +19,9 @@ namespace ShiftManagement.Data.Models
 		public DateTime? DOJ { get; set; }
 		public DateTime? CreatedDateTime { get; set; }
 		public string? ImageExtn { get; set; }
+
+    public Guid? CompanyId { get; set; }
+
 		public bool IsDeleted { get; set; }
 		public DateTime? DeletionDate { get; set; }
 	

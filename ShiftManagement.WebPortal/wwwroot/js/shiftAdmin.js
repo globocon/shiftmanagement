@@ -2,7 +2,7 @@
 
     const Calendar = tui.Calendar;
     var cal, resizeThrottled;
-    var useCreationPopup = true;
+    var useCreationPopup = false;
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
 
@@ -11,17 +11,8 @@
         useCreationPopup: useCreationPopup,
         useDetailPopup: useDetailPopup,
         calendars: CalendarList,
-        template: {
-            milestone: function (model) {
-                return '<span class="calendar-font-icon ic-milestone-b"></span> <span style="background-color: ' + model.bgColor + '">' + model.title + '</span>';
-            },
-            allday: function (schedule) {
-                return getTimeTemplate(schedule, true);
-            },
-            time: function (schedule) {
-                return getTimeTemplate(schedule, false);
-            }
-        }
+        taskView: false,
+        scheduleView: ['allday'],         
     });
 
     // event handlers
@@ -36,8 +27,9 @@
             console.log('clickDayname', date);
         },
         'beforeCreateSchedule': function (e) {
+            $('#new-schedule-modal').modal('show');
             console.log('beforeCreateSchedule', e);
-            saveNewSchedule(e);
+           // saveNewSchedule(e);
         },
         'beforeUpdateSchedule': function (e) {
             var schedule = e.schedule;
@@ -115,8 +107,8 @@
         var options = cal.getOptions();
         var viewName = '';
 
-        console.log(target);
-        console.log(action);
+        //console.log(target);
+        //console.log(action);
         switch (action) {
             case 'toggle-daily':
                 viewName = 'day';
@@ -245,12 +237,15 @@
         var start = event.start ? new Date(event.start.getTime()) : new Date();
         var end = event.end ? new Date(event.end.getTime()) : moment().add(1, 'hours').toDate();
 
-        if (useCreationPopup) {
-            cal.openCreationPopup({
-                start: start,
-                end: end
-            });
-        }
+        //if (useCreationPopup) {
+        //    cal.openCreationPopup({
+        //        start: start,
+        //        end: end
+        //    });
+        //} else {
+        //    $('#new-schedule-modal').modal('show');
+        //}
+        $('#new-schedule-modal').modal('show');
     }
     function saveNewSchedule(scheduleData) {
         var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
@@ -388,10 +383,22 @@
 
     function setSchedules() {
         cal.clear();
-        generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
-        cal.createSchedules(ScheduleList);
-
-        refreshScheduleVisibility();
+        //console.log('generateSchedule call started.');
+        //generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd()).then(function () {
+        //    console.log('generateSchedule call completed.');
+        //    cal.createSchedules(ScheduleList);
+        //    refreshScheduleVisibility();
+        //});
+        // Call the async function to start processing the CalendarList
+        generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd()).then(function () {
+            //console.log('All calendars processed.');
+            //console.log('generateSchedule call completed.');
+            cal.createSchedules(ScheduleList);
+            refreshScheduleVisibility();
+        }).catch(function (error) {
+            console.error('Error processing calendars:', error);
+        });
+        //console.log('generateSchedule call completed with out wait.');
     }
 
     function setEventListener() {
@@ -426,6 +433,7 @@
                     var color = getRandomColor()
                     calendar = new CalendarInfo();
                     calendar.id = String(item.id);
+                    calendar.empid = String(item.id);
                     calendar.name = item.name;
                     calendar.color = '#ffffff';
                     calendar.bgColor = color;
@@ -465,6 +473,66 @@
     setEventListener();
 });
 
+
+$('#btn-mdl-save-newshift').on('click', function (e) {       
+
+    if (isNewShiftEntryValid()) {
+
+        var EmpId = $('#inp-mdl-staff').val();
+        var CltId = $('#inp-mdl-client').val();
+        var ShftDt = $('#inp-mdl-startdate').val();
+        var StrTm = $('#inp-mdl-startdate').val();
+        var EndTm = $('#inp-mdl-enddate').val();
+        var StypeId = 1; // $('#').val();  
+
+        var shiftDetail = {
+            EmployeeId: EmpId,
+            ClientId: CltId,
+            ShiftDate: ShftDt + ' 00:00:00',
+            StartTime: StrTm + ' 10:00:00',
+            EndTime: EndTm + ' 18:00:00',
+            ShiftTypeID: StypeId
+        };
+              
+        $.ajax({
+            url: '/ShiftAdmin?handler=SaveNewShift',
+            type: 'POST',
+            data: {sd: shiftDetail},
+            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+        }).done(function (data) {
+            if (data.success) {                
+                $('#new-schedule-modal').modal('hide');
+                alert_success_with_refresh_window(data.message);
+            } else {
+                alert_error(data.message);
+            }
+        }).fail(function () {
+            alert_error('Something went wrong');
+        });
+    }
+
+});
+
+function isNewShiftEntryValid() {
+
+    let valdfail = false;
+    
+    var EmpId = $('#inp-mdl-staff').val();
+    var CltId = $('#inp-mdl-client').val();
+    var StrTm = $('#inp-mdl-startdate').val();
+    var EndTm = $('#inp-mdl-enddate').val();
+
+    if (EmpId == '' || CltId == '' || StrTm == '' || EndTm == '') {
+        valdfail = true;
+    }
+
+    if (valdfail == true) {
+        alert_error('Please fill in all fields.');
+        return false;
+    }
+    return true;
+
+}
 
 // set calendars
 //(function () {

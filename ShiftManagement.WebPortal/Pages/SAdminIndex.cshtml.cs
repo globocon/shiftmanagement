@@ -2,25 +2,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShiftManagement.Data.Models;
 using ShiftManagement.Data.Providers;
+using ShiftManagement.WebPortal.Helpers;
+using System.Security.Principal;
 
 namespace ShiftManagement.WebPortal.Pages
 {
     public class SAdminIndexModel : PageModel
     {
-		private readonly IClientDataProvider _clientDataProvider;
+		private readonly ICompanyDataProvider _companyDataProvider;
 
-		public SAdminIndexModel(IClientDataProvider clientDataProvider)
+		public SAdminIndexModel(ICompanyDataProvider companyDataProvider)
 		{
-			_clientDataProvider = clientDataProvider;
+            _companyDataProvider = companyDataProvider;
 		}
 
 		[BindProperty]
-		public List<Clients> ClientsList { get; set; }
-     
+		public List<Company> CompanyList { get; set; }
+
+        [BindProperty]
+        public Company newCompany { get; set; }
+
         public void OnGet()
-        {
-			//ClientsList.Clear();
-			ClientsList = _clientDataProvider.GetClientsList();
+        {            
+            CompanyList = _companyDataProvider.GetCompanyList();
+			newCompany = new Company() {
+				Id = new Guid(),
+                IsMasterCompany = false,
+                IsDeleted = false
+            };
+
         }
         //public async Task<IActionResult> OnPostSaveClientDetailsAsync(int id, string name)
         //{ 
@@ -46,59 +56,81 @@ namespace ShiftManagement.WebPortal.Pages
         //    }
         //}
 		
-        public JsonResult  OnPostSaveUpdateClientDetails(Clients record)
+
+
+		public PartialViewResult OnGetClientProfileSettings(Guid companyId)		
 		{
-
-			try
-			{
-
-				int success = _clientDataProvider.SaveOrUpdateClientDetails(record);
-
-				if (success==1)
-				{
-					return new JsonResult(new { success = true, message = "Client details updated." });
-				}
-				else if (success==2)
-				{
-					return new JsonResult(new { success = false, message = "Client details added." });
-				}
-                else
-                {
-					return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
-				}
-			}
-			catch (Exception ex)
-			{
-				// Log the exception
-				return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
-			}
+			var company = _companyDataProvider.GetCompanyById(companyId);
+            company ??= new Company() { };			
+			return Partial("_companyProfile", company);
 		}
-		public JsonResult OnPostDeleteClientDetails(int id)
+
+		public IActionResult OnPostCheckIdAvailable(string companyId)
+        {
+            bool success = false;
+            string message = "Id already in use.";
+            success = _companyDataProvider.CheckIfCompanyIdAvailable(companyId);
+            if (success)
+                message = "Id is available.";
+
+            return new JsonResult(new { success = success, message = message });
+        }
+        public JsonResult OnPostNewCompany()
         {
             var success = false;
-            var message = "Unable to delete client. Invalid client id.";
-            try
-            { 
-
-                _clientDataProvider.DeleteClientDetails(id);
-                
-                message = "client '" + id + "' marked for deletion !!!";
-                success = true;
-                ClientsList = _clientDataProvider.GetClientsList();
-            }
-            catch (Exception ex)
+            var message = "New company creation failed.<br>";
+            if (newCompany != null)
             {
-                message = ex.Message;
+                try
+                {
+                    if (newCompany.CompanyName != string.Empty && newCompany.CompanyNameID != string.Empty)
+                    {
+                        string msg = "";
+                        newCompany.CreationDate = DateTime.UtcNow;
+                        newCompany.CreatedUserID = AuthUserHelper.LoggedInUserId;
+                        success = _companyDataProvider.CreateNewCompany(newCompany, out msg);
+                        message = msg;
+                    }
+                    else
+                    {
+                        message += "Please fill all required fields. !!!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    message += ex.Message;
+                }
             }
-
-            return new JsonResult(new { success, message });
+            else { message += "Invalid company details. !!!"; }
+            return new JsonResult(new { success = success, message = message });
         }
-		
-		public PartialViewResult OnGetClientProfileSettings(int clientId)
-		{
-			var client = _clientDataProvider.GetClientsById(clientId);
-			client ??= new Clients() { };			
-			return Partial("_clientProfile", client);
-		}
-	}
+
+        public JsonResult OnPostDeleteCompany(Guid companyid)
+        {
+            var success = false;
+            var message = "Unable to delete company.<br>";
+            if (companyid != new Guid("00000000-0000-0000-0000-000000000000"))
+            {
+                try
+                {
+                    if (companyid != null)
+                    {
+                        string msg = "";                        
+                        success = _companyDataProvider.DeleteCompany(companyid, AuthUserHelper.LoggedInUserId, out msg);
+                        message = msg;
+                    }
+                    else
+                    {
+                        message += "Invalid company details. !!!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    message += ex.Message;
+                }
+            }
+            else { message += "Invalid company Id. !!!"; }
+            return new JsonResult(new { success = success, message = message });
+        }
+    }
 }

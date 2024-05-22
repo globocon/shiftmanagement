@@ -44,7 +44,7 @@ namespace ShiftManagement.Data.Providers
                     {                                                
                         _context.Companies.Add(newCompany);
                         _context.SaveChanges();
-                        msg = $"Company created successfully.";
+                        msg = "Company created successfully.";
                         IsSuccess = true;
                     }
                     else
@@ -67,13 +67,27 @@ namespace ShiftManagement.Data.Providers
             var exacc = _context.Companies.FirstOrDefault(x => x.IsDeleted == false && x.Id == CompanyId);
             if (exacc != null)
             {
-                exacc.IsDeleted = true;
-                exacc.DeletionDate = DateTime.UtcNow;
-                exacc.DeleteUserID = userid;
-                _context.Companies.Update(exacc);
-                _context.SaveChanges();
-                msg = $"Company deleted successfully.";
-                IsSuccess = true;
+                // To check if company is linked with any active client or employee, if yes don't delete
+                var empexists = _context.Employees.Where(x => x.IsDeleted == false && x.CompanyId == CompanyId);
+                var cliexists = _context.Clients.Where(x => x.IsDeleted == false && x.CompanyId == CompanyId);
+                if (empexists != null)
+                {
+					msg = "Unable to delete company.<br>One or more employees are linked with the company.";
+				}
+                else if (cliexists != null)
+				{
+					msg = "Unable to delete company.<br>One or more clients are linked with the company.";
+				}
+				else
+				{
+                    exacc.IsDeleted = true;
+                    exacc.DeletionDate = DateTime.UtcNow;
+                    exacc.DeleteUserID = userid;
+                    _context.Companies.Update(exacc);
+                    _context.SaveChanges();
+                    msg = "Company deleted successfully.";
+                    IsSuccess = true;
+                }
             }
             else
             {

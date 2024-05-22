@@ -199,16 +199,16 @@ $(function () {
         $('#div_company_settings').html('');
         var csnme = $('#hinp_company_profile_modal_companyname').val();
         var compid = $('#hinp_company_profile_modal_companyid').val();
-        $('#mdl_company_name').text(csnme);
+        //$('#mdl_company_name').text(csnme);
 
         $('#div_company_profile_settings').load('/SAdminIndex?handler=CompanyProfileSettings&companyId=' + compid, function () {
             // This function will be executed after the content is loaded
             // window.sharedVariable = button.data('cs-id');
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
-            // console.log(csnme);   
+            // console.log(csnme);
 
-            //$('.btnsave_me').on('click', function (e) {
+            //$('#btn-mdl-edit-save-company').on('click', function (e) {
             //    var data = {
             //        'id': csid,
             //        'Name': $('#Name').val(),

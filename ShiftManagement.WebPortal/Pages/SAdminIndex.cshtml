@@ -89,10 +89,10 @@
                         <span asp-validation-for="newCompany" class="text-danger d-none"></span>
                     </div>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="button" id="btn-mdl-add-new-company" class="btn btn-primary pull-right" value="Save" />
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="button" id="btn-mdl-add-new-company" class="btn btn-primary pull-right" value="Save" />
             </div>
         </div>
     </div>
@@ -101,16 +101,20 @@
 
 <!-- Company Profile settings Edit modal -->
 <div class="modal" tabindex="-1" role="dialog" id="company-profile-modal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> Edit Settings for <span id="mdl_company_name"></span></h5>
+                <h5 class="modal-title"><i class="fa fa-gear" aria-hidden="true"></i> Edit Company</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-light">
                 <input type="hidden" id="hinp_company_profile_modal_companyid" />
                 <input type="hidden" id="hinp_company_profile_modal_companyname" />
                 <div id="div_company_profile_settings"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="button" id="btn-mdl-edit-save-company" class="btn btn-primary pull-right" value="Save" />
             </div>
         </div>
     </div>

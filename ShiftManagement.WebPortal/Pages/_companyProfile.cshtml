@@ -1,4 +1,57 @@
-﻿
-
+﻿@model ShiftManagement.Data.Models.Company
+@inject IWebHostEnvironment WebHostEnvironment
 @{
+
 }
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="d-flex flex-column align-items-center text-center">
+					@{
+						var companyimg = "/images/Company/Noimage.png";
+						if (Model.ImageExtn != null)
+						{
+							var pth = System.IO.Path.Combine(WebHostEnvironment.WebRootPath, "images\\Company\\" + Model.Id.ToString() + Model.ImageExtn);
+							if (System.IO.File.Exists(pth))
+							{
+								companyimg = "/images/Company/" + Model.Id.ToString() + Model.ImageExtn;
+							}
+						}
+					}
+					<img src=@companyimg alt="companyImage_@Model.Id.ToString()" class="rounded-circle p-1 bg-primary" width="110" asp-append-version=true>
+					<div class="mt-3">
+						<h4>@Model.CompanyName</h4>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-sm-5">
+						<h6 class="mb-0 mt-2">Company Name</h6>
+					</div>
+					<div class="col-sm-7 text-secondary">
+						<input asp-for="@Model.CompanyName" class="form-control" value="@Model.CompanyName" required />
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-5">
+						<h6 class="mb-0 mt-2">Company Name ID</h6>
+					</div>
+					<div class="col-sm-7 text-secondary">
+						<input asp-for="@Model.CompanyNameID" class="form-control" value="@Model.CompanyNameID" readonly disabled/>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+	</div>
+</div>
+
+

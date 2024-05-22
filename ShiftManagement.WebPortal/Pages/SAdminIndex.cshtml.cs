@@ -34,7 +34,7 @@ namespace ShiftManagement.WebPortal.Pages
         }
         
 
-		public PartialViewResult OnGetClientProfileSettings(Guid companyId)		
+		public PartialViewResult OnGetCompanyProfileSettings(Guid companyId)		
 		{
 			var company = _companyDataProvider.GetCompanyById(companyId);
             company ??= new Company() { };			

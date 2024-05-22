@@ -21,7 +21,7 @@ $(function () {
                     //location.reload(true);
                     $('#add-new-company-modal').modal('hide');
                     alert_success_with_refresh_window(data.message);
-                } else {                    
+                } else {
                     alert_error(data.message);
                 }
             }).fail(function () {
@@ -34,7 +34,7 @@ $(function () {
         $('#frmNewCompany').removeClass('invalid');
         $("#newCompany_CompanyName").val('');
         $("newCompany_CompanyNameID").val('');
-        $('#mdl-add-new-company-checkId-available').html('.');     
+        $('#mdl-add-new-company-checkId-available').html('.');
     });
 
     function isNewCompanyEntryValid() {
@@ -46,14 +46,14 @@ $(function () {
 
         var pCompanyName = document.getElementById("newCompany_CompanyName");
         var pCompanyID = document.getElementById("newCompany_CompanyNameID");
-               
+
         if (pCompanyName.value == '' || pCompanyID.value == '') {
             valdfail = true;
         }
 
         if (valdfail == true) {
             $('#frmNewCompany').addClass('was-validated');
-            $('#frmNewCompany').addClass('invalid');         
+            $('#frmNewCompany').addClass('invalid');
             return false;
         }
         return true;
@@ -61,7 +61,7 @@ $(function () {
 
     $('#newCompany_CompanyNameID').on('keyup', function () {
         const txt = $(this);
-        const disp = $('#mdl-add-new-company-checkId-available');  
+        const disp = $('#mdl-add-new-company-checkId-available');
         disp.html('.');
         if (txt.val().length >= 3) {
             $.ajax({
@@ -73,14 +73,14 @@ $(function () {
                 disp.removeClass('text-success').removeClass('text-danger');
                 disp.html(data.message);
                 if (data.success) {
-                    disp.addClass('text-success'); 
+                    disp.addClass('text-success');
                 } else {
                     disp.addClass('text-danger');
-                }              
+                }
             }).fail(function () {
                 //disp.addClass('d-none');
-            });            
-        } 
+            });
+        }
     });
 
 
@@ -95,9 +95,9 @@ $(function () {
     // alert('client ' + clientName + ' marked for deletion !!!');
 
 
-$("#DeleteConfirmModal").on("hidden.bs.modal", function () {
-    $('#inpClientidDeleteConfirmModal').val('');
-});
+    $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
+        $('#inpClientidDeleteConfirmModal').val('');
+    });
 
     function deleteClient(clientToDeleteId) {
         $.ajax({
@@ -116,7 +116,7 @@ $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
         }).fail(function () {
             console.log('error');
         });
-    }      
+    }
 
     function deleteCompany(companyId) {
         $.ajax({
@@ -138,10 +138,10 @@ $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
     $('.viewcompany').on('click', function () {
         const btn = $(this);
         const clientId = btn.attr('data-clientid');
-        const clientName = btn.attr('data-clientname');       
+        const clientName = btn.attr('data-clientname');
         $('#hinp_client_profile_modal_clientid').val(clientId);
         $('#hinp_client_profile_modal_clientname').val(clientName);
-        $('#client-profile-modal').modal('show'); 
+        $('#client-profile-modal').modal('show');
         // Disable all interactive elements within the modal
         $('#client-profile-modal :input').prop('disabled', true);
         // Disable all input elements within the modal
@@ -159,9 +159,9 @@ $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
             alert('Please provide a client name.');
             return;
         }
-       
-    }); 
-     
+
+    });
+
     //function saveClient(clientId, clientName) {
     //    //  AJAX call to save client details
     //    $.ajax({
@@ -186,59 +186,59 @@ $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
 
     $('.editcompany').on('click', function () {
         const btn = $(this);
-        const clientId = btn.attr('data-clientid');
-        const clientName = btn.attr('data-clientname');
-        $('#hinp_client_profile_modal_clientid').val(clientId);
-        $('#hinp_client_profile_modal_clientname').val(clientName);
-        $('#client-profile-modal').modal('show');
-        
+        const companyId = btn.attr('data-companyid');
+        const companyName = btn.attr('data-companyname');
+        $('#hinp_company_profile_modal_companyid').val(companyId);
+        $('#hinp_company_profile_modal_companyname').val(companyName);
+        $('#company-profile-modal').modal('show');
+
     });
 
 
-    $('#client-profile-modal').on('shown.bs.modal', function (event) {
-        $('#div_client_settings').html('');
-        var csnme = $('#hinp_client_profile_modal_clientname').val();
-        var compid = $('#hinp_client_profile_modal_clientid').val();
-        $('#mdl_client_name').text(csnme)
+    $('#company-profile-modal').on('shown.bs.modal', function (event) {
+        $('#div_company_settings').html('');
+        var csnme = $('#hinp_company_profile_modal_companyname').val();
+        var compid = $('#hinp_company_profile_modal_companyid').val();
+        $('#mdl_company_name').text(csnme);
 
-        $('#div_client_profile_settings').load('/SAdminIndex?handler=ClientProfileSettings&companyId=' + compid, function () {
+        $('#div_company_profile_settings').load('/SAdminIndex?handler=CompanyProfileSettings&companyId=' + compid, function () {
             // This function will be executed after the content is loaded
             // window.sharedVariable = button.data('cs-id');
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
-            // console.log(csnme);    
-            $('.btnsave_me').on('click', function (e) {
-                var data = {
-                    'id':csid,
-                    'Name': $('#Name').val(),
-                    'emails': $('#Emails').val(),
-                    'phone': $('#Phone').val(),
-                    'address': $('#Address').val(),
-                };
-                    $.ajax({
-                        url: '/SAdminIndex?handler=SaveUpdateClientDetails',
-                    data: { record: data },
-                    type: 'POST',
-                    headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
-                }).done(function (data) {
-                    if (data.success) {
-                        
-                        showSuccessModalSmall("Update Client", data.message);
-                    }
-                    else {
-                        showErrorModalSmall("Update Client", data.message);
-                    }
-                }).fail(function () {
-                    console.log('error');
-                });
-            });
-        });
-               
+            // console.log(csnme);   
 
-          
+            //$('.btnsave_me').on('click', function (e) {
+            //    var data = {
+            //        'id': csid,
+            //        'Name': $('#Name').val(),
+            //        'emails': $('#Emails').val(),
+            //        'phone': $('#Phone').val(),
+            //        'address': $('#Address').val(),
+            //    };
+            //    $.ajax({
+            //        url: '/SAdminIndex?handler=SaveUpdateClientDetails',
+            //        data: { record: data },
+            //        type: 'POST',
+            //        headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+            //    }).done(function (data) {
+            //        if (data.success) {
+
+            //            showSuccessModalSmall("Update Client", data.message);
+            //        }
+            //        else {
+            //            showErrorModalSmall("Update Client", data.message);
+            //        }
+            //    }).fail(function () {
+            //        console.log('error');
+            //    });
+            //});
+
+
         });
-       
-   
+    });
+
+
 
 });
 

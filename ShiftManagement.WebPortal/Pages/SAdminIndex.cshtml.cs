@@ -32,31 +32,7 @@ namespace ShiftManagement.WebPortal.Pages
             };
 
         }
-        //public async Task<IActionResult> OnPostSaveClientDetailsAsync(int id, string name)
-        //{ 
-
-        //    try
-        //    {
-              
-        //        var success = await _clientDataProvider.SaveClientDetailsAsync(id, name);
-
-        //        if (success)
-        //        {
-        //            return new JsonResult(new { success = true, message = "Client details saved successfully." });
-        //        }
-        //        else
-        //        {
-        //            return new JsonResult(new { success = false, message = "Failed to save client details." });
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception
-        //        return new JsonResult(new { success = false, message = "An error occurred while saving client details." });
-        //    }
-        //}
-		
-
+        
 
 		public PartialViewResult OnGetClientProfileSettings(Guid companyId)		
 		{

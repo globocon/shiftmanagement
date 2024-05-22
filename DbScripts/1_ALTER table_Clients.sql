@@ -1,0 +1,1 @@
+alter table clients add Phone varchar(100)

@@ -198,10 +198,10 @@ $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
     $('#client-profile-modal').on('shown.bs.modal', function (event) {
         $('#div_client_settings').html('');
         var csnme = $('#hinp_client_profile_modal_clientname').val();
-        var csid = $('#hinp_client_profile_modal_clientid').val();
+        var compid = $('#hinp_client_profile_modal_clientid').val();
         $('#mdl_client_name').text(csnme)
 
-        $('#div_client_profile_settings').load('/SAdminIndex?handler=ClientProfileSettings&clientId=' + csid, function () {
+        $('#div_client_profile_settings').load('/SAdminIndex?handler=ClientProfileSettings&companyId=' + compid, function () {
             // This function will be executed after the content is loaded
             // window.sharedVariable = button.data('cs-id');
             // console.log('Load operation completed!');

@@ -52,15 +52,99 @@
 			</div>
 		</div>
 	</div>
+	<style>
+		.form-control::placeholder {
+			color: #6c757d; /* Bootstrap's default placeholder color */
+			opacity: 1; /* Firefox's default placeholder opacity */
+		}
+	</style>
 	<div class="col-lg-8">
 		<div class="card">
 			<div class="card-body">
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Full Name</h6>
+						<h6 class="mb-0"> Name</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Name" class="form-control" value="@Model.Name" />
+						<input type="checkbox" class="form-check-input" id="useSalutationCheckbox" checked="checked" />
+						<label class="form-check-label" for="useSalutationCheckbox">Use Salutation</label>
+						<div class="col-sm-3">
+
+							<select class="form-control" id="salutationSelect">
+								<option value="" selected>Select Salutation</option>
+								<option selected>Mr.</option>
+								<option>Mrs.</option>
+								<option>Miss</option>
+								<option>Ms.</option>
+								<option>Mx.</option>
+								<option>Dr.</option>
+								<option>Prof.</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3 text-secondary">
+						<input type="text" class="form-control" placeholder="First Name" aria-label="First Name">
+					</div>
+					<div class="col-sm-3 text-secondary">
+						<input type="text" class="form-control" placeholder="Middle Name" aria-label="Middle Name">
+					</div>
+					<div class="col-sm-3 text-secondary">
+						<input type="text" class="form-control" placeholder="Last/Family Name" aria-label="Last Name">
+					</div>
+				</div>
+		
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Display Name</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.Name" class="form-control" value="@Model.Name" placeholder="Enter Display Name" />
+					</div>
+				</div>
+			
+				<div class="row mb-3">
+					<label for="genderSelect" class="col-sm-3 col-form-label">Gender</label>
+					<div class="col-sm-3">
+						<select class="form-select" id="genderSelect">
+							<option value="" selected>Select</option>
+							<option>Male</option>
+							<option>Female</option>
+							<option>Other</option>
+						</select>
+					</div>
+					<label for="dobPicker" class="col-sm-3 col-form-label">Date of Birth</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control" id="dobPicker" placeholder="Pick a date">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Address</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.Name" class="form-control" value="@Model.Name" placeholder="Enter Address" />
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Unit/ Apartment No:</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input type="text" class="form-control" placeholder="Enter Unit/ Apartment No">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Contact:</h6>
+					</div>
+					<div class="col-sm-3 text-secondary">
+						<input type="text" class="form-control" placeholder="Enter mobile No ">
+					</div>
+					<div class="col-sm-3 text-secondary">
+						<input type="text" class="form-control" placeholder="Enter Phone No">
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -68,30 +152,64 @@
 						<h6 class="mb-0">Email</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Emails" class="form-control" value="@Model.Emails" />
+						<input asp-for="@Model.Emails" class="form-control" value="@Model.Emails" placeholder="Enter Email"/>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Phone</h6>
+						<h6 class="mb-0">Enter Religion</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" />
+						<input asp-for="@Model.Emails" class="form-control" value="@Model.Emails" placeholder="Enter Religion"/>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="maritalStatusSelect" class="col-sm-3 col-form-label">Marital Status</label>
+					<div class="col-sm-3">
+						<select class="form-select" id="maritalStatusSelect">
+							<option value="" selected>Select</option>
+							<option>Single</option>
+							<option>Married</option>
+							<option>Divorced</option>
+							<option>Separated</option>
+							<option>Widowed</option>
+						</select>
+					</div>
+				
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Nationality</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" placeholder="Enter Your Nationality" />
 					</div>
 				</div>				
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Address</h6>
+						<h6 class="mb-0">Languages</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Address" class="form-control" value="@Model.Address" />
+						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" placeholder="Select" />
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<h6 class="mb-0">Client Status:</h6>
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input type="checkbox" class="form-check-input" id="clientStatus"  />
+						<label class="form-check-label" for="useSalutationCheckbox">Client is a prospect</label>
+						
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-3"></div>
-					<div class="col-sm-9 text-secondary">
-						<input id="btn_saveme" type="button" class="btn btn-primary px-4 btnsave_me"  value="Save Changes" />
-				
+					<div class="col-sm-9 text-secondary text-end">
+						<input id="btn_Cancel" type="button" class="btn btn-primary px-4 btncancel" value="Cancel" />
+						<input id="btn_Save" type="button" class="btn btn-primary px-4 btnsave" value="Create" />
 					</div>
 				</div>
 			</div>

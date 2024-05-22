@@ -3,6 +3,18 @@ $(function () {
 
     new PerfectScrollbar('.customers-list');
 
+    const addClientBtn = document.getElementById('add-client-btn');
+
+    // Get a reference to the client profile modal
+    const clientProfileModal = new bootstrap.Modal(document.getElementById('client-profile-modal'));
+
+    // Add an event listener to show the modal when the button is clicked
+    addClientBtn.addEventListener('click', function () {
+        //$('#mdl_client_name').text("Save New Client")
+        clientProfileModal.show();
+       
+    });
+    
     $(document).on('click', '.deleteclient', function () {
         const btn = $(this);
         const clientId = btn.data('clientid');
@@ -73,6 +85,17 @@ $(function () {
             // console.log('Load operation completed!');
             // You can add your additional code or actions here
             // console.log(csnme);    
+            //enable or disable salutation combobox
+            document.getElementById('useSalutationCheckbox').addEventListener('change', function () {
+                var salutationSelect = document.getElementById('salutationSelect');
+                salutationSelect.disabled = !this.checked;
+                if (!this.checked) {
+                    salutationSelect.value = "";
+                }
+                else
+                    { salutationSelect.value = "Mr."; }
+                
+            });
             $('.btnsave_me').on('click', function (e) {
                 var data = {
                     'id': csid,

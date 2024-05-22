@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NuGet.Protocol.Plugins;
-using ShiftManagement.Data.Helpers;
 using ShiftManagement.Data.Models;
 using ShiftManagement.Data.Providers;
 using ShiftManagement.WebPortal.Helpers;

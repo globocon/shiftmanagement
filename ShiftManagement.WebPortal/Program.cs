@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ShiftManagement.Data;
 using ShiftManagement.Data.Providers;
@@ -24,18 +25,22 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/");
     options.Conventions.AuthorizeFolder("/Develop");
     options.Conventions.AllowAnonymousToFolder("/Account");
+	options.Conventions.AllowAnonymousToFolder("/Public");
+	options.Conventions.AllowAnonymousToFolder("/Views");
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(120);
 });
+
+builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Errors");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -43,7 +48,7 @@ if (!app.Environment.IsDevelopment())
 AuthUserHelper.Configure(app.Services.GetService<IHttpContextAccessor>());
 UserAuthenticationService.Configure(app.Services.GetService<IHttpContextAccessor>());
 
-
+app.UseStatusCodePagesWithReExecute("/Errors/404");
 app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -55,6 +60,9 @@ app.MapRazorPages();
 app.MapControllerRoute(name: "clients",
                 pattern: "client/{*clientpage}",
                 defaults: new { controller = "clients", action = "clientpage" });
+app.MapControllerRoute(name: "Employee",
+                pattern: "staff/{*clientpage}",
+                defaults: new { controller = "staff", action = "staffpage" });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

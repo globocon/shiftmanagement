@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel;
+
 namespace ShiftManagement.Data.Models
 {
     public class Clients
@@ -18,18 +20,21 @@ namespace ShiftManagement.Data.Models
 
     }
 
-    public class Client
+    public class PublicClient
     {
-        public int Id { get; set; }
+        [DisplayName("Name")]
         public string Name { get; set; }
+
+        [DisplayName("Email")]
         public string? Emails { get; set; }
-        public string? Address { get; set; }
-        public int Status { get; set; }
-        public DateTime? CreationDate { get; set; }
-        public DateTime? DeletionDate { get; set; }
-        public bool IsDeleted { get; set; }
-        public string? ImageExtn { get; set; }
-        public Guid? CompanyId { get; set; }
+
+        [DisplayName("Phone")]
+        public string Phone { get; set; }
+
+        [DisplayName("Address")]
+        public string? Address { get; set; }   
+
+        public Guid CompanyId { get; set; }
 
     }
 }

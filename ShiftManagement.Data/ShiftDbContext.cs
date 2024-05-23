@@ -16,7 +16,7 @@ namespace ShiftManagement.Data
 		public DbSet<Employees> Employees { get; set; }
         public DbSet<ShiftType> ShiftType { get; set; }
         public DbSet<ShiftDetail> ShiftDetail { get; set; }
-
+        public DbSet<PublicClientEmployeeRequest> PublicClientEmployeeRequest { get; set; }
 
     }
 }

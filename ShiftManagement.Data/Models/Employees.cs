@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,10 +27,13 @@ namespace ShiftManagement.Data.Models
         public DateTime? DeletionDate { get; set; }
 
         [NotMapped]
+        [DisplayName("Date Of Birth")]
         public string FormattedDOB { get { return DOB.HasValue ? DOB.Value.ToString("dd-MMM-yyyy") : string.Empty; } }
         [NotMapped]
+        [DisplayName("Date Of Join")]
         public string FormattedDOJ { get { return DOJ.HasValue ? DOJ.Value.ToString("dd-MMM-yyyy") : string.Empty; } }
         [NotMapped]
+        [DisplayName("Gender")]
         public string GenderDesc
         {
             get
@@ -50,6 +54,7 @@ namespace ShiftManagement.Data.Models
         }
 
         [NotMapped]
+        [DisplayName("Employement Type")]
         public string EmployementTypeDesc
         {
             get
@@ -65,6 +70,27 @@ namespace ShiftManagement.Data.Models
                 else return "Not Available";
             }
         }
+
+    }
+
+    public class PublicEmployee
+    {
+        [DisplayName("Name")]
+        public string Name { get; set; }
+        [DisplayName("Phone")]
+        public string Phone { get; set; }
+        [DisplayName("Gender")]
+        public string Gender { get; set; }
+        public int EmployementTypeId { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DOB { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DOJ { get; set; }
+        public DateTime? CreatedDateTime { get; set; }
+        public string? ImageExtn { get; set; }
+        public Guid CompanyId { get; set; }
 
     }
 }

@@ -3,6 +3,23 @@ $(function () {
 
     new PerfectScrollbar('.customers-list');
 
+    const addClientBtn = document.getElementById('add-client-btn');
+
+    // Get a reference to the client profile modal
+    const clientProfileModal = new bootstrap.Modal(document.getElementById('client-profile-modal'));
+   
+    addClientBtn.addEventListener('click', function () {
+        //$('#mdl_client_name').text("Save New Client")
+        clientProfileModal.show();
+
+    });
+
+    const addStaffBtn = document.getElementById('add-staff-btn'); 
+    const staffProfileModal = new bootstrap.Modal(document.getElementById('employee-profile-modal'));
+    addStaffBtn.addEventListener('click', function () {       
+        staffProfileModal.show();
+
+    });
     $(document).on('click', '.deleteclient', function () {
         const btn = $(this);
         const clientId = btn.data('clientid');
@@ -40,7 +57,7 @@ $(function () {
         }).fail(function () {
             console.log('error');
         });
-    }      
+    }
 
     $('.viewclient').on('click', function () {
         const btn = $(this);
@@ -69,18 +86,56 @@ $(function () {
 
         $('#div_client_profile_settings').load('/CAdminIndex?handler=ClientProfileSettings&clientId=' + csid, function () {
             // This function will be executed after the content is loaded
-            // window.sharedVariable = button.data('cs-id');
-            // console.log('Load operation completed!');
-            // You can add your additional code or actions here
+            
 
-            // console.log(csnme);    
-            $('.btnsave_me').on('click', function (e) {
+            //enable or disable salutation combobox
+            var originalSalutationOptions = document.getElementById('Salutation').innerHTML;
+            document.getElementById('useSalutationCheckbox').addEventListener('change', function () {
+                var salutationSelect = document.getElementById('Salutation');
+                salutationSelect.disabled = !this.checked;
+                if (!this.checked) {
+                  
+                        // Clear existing options
+                    Salutation.innerHTML = '';
+
+                        // Create and add new option
+                        var option = document.createElement('option');
+                    option.text = 'Select Salutation.';
+                    option.value = 'Select Salutation.';
+                    Salutation.add(option);
+                   
+                }
+                
+                else {
+                    Salutation.innerHTML = originalSalutationOptions;
+                    Salutation.value = "Mr.";
+                }
+
+            });
+            
+            $('.btncancel').on('click', function (e) {
+                $('#client-profile-modal').modal('hide');
+            });
+            $('.btnsave').on('click', function (e) {
                 var data = {
                     'id': csid,
-                    'Name': $('#Name').val(),
-                    'emails': $('#Emails').val(),
-                    'phone': $('#Phone').val(),
+                    'Salutation': $('#Salutation').val(),
+                    'FirstName':$('#FirstName').val(),
+                    'SecondName':$('#SecondName').val(),
+                    'LastName': $('#LastName').val(),
+                    'DisplayName': $('#DisplayName').val(),
+                    'Gender': $('#Gender').val(),
+                    'DateOfBirth': $('#dobPicker').val(),
                     'address': $('#Address').val(),
+                    'UnitOrApartmentNo': $('#UnitOrApartmentNo').val(),
+                    'Mobile': $('#Mobile').val(),
+                    'phone': $('#Phone').val(),
+                    'email': $('#Email').val(),                                       
+                    'MaritalStatus': $('#MaritalStatus').val(),
+                    'Nationality': $('#Nationality').val(),
+                    'Languages': $('#Languages').val(),
+                    'ClientStatus': $('#ClientStatus').prop('checked'),            
+                                        
                 };
                 $.ajax({
                     url: '/CAdminIndex?handler=SaveUpdateClientDetails',
@@ -89,11 +144,12 @@ $(function () {
                     headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                 }).done(function (data) {
                     if (data.success) {
+                        alert(data.message);
+                        // showSuccessModalSmall("Update Client", data.message);
 
-                        showSuccessModalSmall("Update Client", data.message);
                     }
                     else {
-                        showErrorModalSmall("Update Client", data.message);
+                       // showErrorModalSmall("Update Client", data.message);
                     }
                 }).fail(function () {
                     console.log('error');
@@ -103,21 +159,22 @@ $(function () {
     });
 
 
-    $('#employee-profile-modal').on('show.bs.modal', function (event) {
-        $('#div_employee_settings').html('');         
-            
+    $('#employee-profile-modal').on('shown.bs.modal', function (event) {
+        $('#div_employee_settings').html('');
+
         const button = $(event.relatedTarget);
         const empId = button.data('id');// $(this).data('name')
         const empName = button.data('name');
-        $('#mdl_employee_name').text(empName)
-        if (empId != 0 && empId != null) {
+       
+        if (empId != 0 && empId != null || empId == undefined) {
+            $('#mdl_employee_name').text(empName)
             if (button.attr('id') == "btnDeleteStaff") {
                 $('#employee-profile-modal').modal('hide');
                 $('#inpClientidDeleteConfirmModal').val(empId);
                 $('#msgDeleteConfirmModal').html('Are you sure to delete this employee ?');
                 $('#DeleteConfirmModal').modal('show');
             }
-            else if (button.attr('id') === "btnEditStaff" || button.attr('id') === "btnViewStaff" || button.attr('id') === "btnSaveStaff") {
+           // else if (button.attr('id') === "btnEditStaff" || button.attr('id') === "btnViewStaff" || button.attr('id') === "btnSaveStaff") {
                 //if (button.attr('id') === "btnSaveStaff") 
                 //{
                 //    const btn = $(this);
@@ -127,41 +184,71 @@ $(function () {
                 //    $('#hinp_client_profile_modal_clientname').val('');
                 //    $('#client-profile-modal').modal('show');
                 //}
-              
-           
-                 $('#div_employee_profile_settings').load('/CAdminIndex?handler=EmployeeProfileSettings&EmployeeId=' + empId, function () {
-           
-                     $('.btnsave_employee').on('click', function (e) {
-                         var data = {
-                             'id': empId,
-                             'Name': $('#Name').val(),
-                             'phone': $('#Phone').val(),
-                             'DOB': $('#DOB').val(),
-                             'DOJ': $('#DOJ').val(),
-                         };
-                         $.ajax({
-                             url: '/CAdminIndex?handler=SaveUpdateEmployeeDetails',
-                             data: { record: data },
-                             type: 'POST',
-                             headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
-                         }).done(function (data) {
-                             if (data.success) {
 
-                                 showSuccessModalSmall("Update Employee", data.message);
-                             }
-                             else {
-                                 showErrorModalSmall("Update Employee", data.message);
-                             }
-                         }).fail(function () {
-                             console.log('error');
-                         });
-                     });
-        
-                 });
-             }
-            
+                $('#div_employee_profile_settings').load('/CAdminIndex?handler=EmployeeProfileSettings&EmployeeId=' + empId, function () {
+
+                    var originalSalutationStaffOptions = document.getElementById('SalutationStaff').innerHTML;
+                    document.getElementById('useSalutationStaff').addEventListener('change', function () {
+                        var SalutationStaffSelect = document.getElementById('SalutationStaff');
+                        SalutationStaffSelect.disabled = !this.checked;
+                        if (!this.checked) {
+
+                            // Clear existing options
+                            SalutationStaff.innerHTML = '';
+
+                            // Create and add new option
+                            var option = document.createElement('option');
+                            option.text = 'Select Salutation.';
+                            option.value = 'Select Salutation.';
+                            SalutationStaff.add(option);
+
+                        }
+
+                        else {
+                            SalutationStaff.innerHTML = originalSalutationOptions;
+                            SalutationStaff.value = "Mr.";
+                        }
+
+                    });
+                    $('.btncancelEmployee').on('click', function (e) {
+                        $('#employee-profile-modal').modal('hide');
+                    });
+                    $('.btnsave_employee').on('click', function (e) {
+                        var data = {
+                            'id': empId,
+                            'Name': $('#Name').val(),
+                            'Email': $('#Email').val(),
+                            'Mobile': $('#Mobile').val(),
+                            'Phone': $('#Phone').val(),
+                            'Gender': $('#Gender').val(),
+                            'DOB': $('#DOB').val(),
+                            'EmployementTypeId': $('#EmployementTypeId').val(),
+                            'Address': $('#Address').val(),
+                            'DOJ': $('#DOJ').val(),
+                        };
+                        $.ajax({
+                            url: '/CAdminIndex?handler=SaveUpdateEmployeeDetails',
+                            data: { record: data },
+                            type: 'POST',
+                            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                        }).done(function (data) {
+                            if (data.success) {
+
+                                showSuccessModalSmall("Update Employee", data.message);
+                            }
+                            else {
+                                showErrorModalSmall("Update Employee", data.message);
+                            }
+                        }).fail(function () {
+                            console.log('error');
+                        });
+                    });
+
+                });
+            //}
+
             $('#btnDeleteConfirmModal').on('click', function () {
-              
+
                 var employeeToDeleteId = $('#inpClientidDeleteConfirmModal').val();
                 $('#DeleteConfirmModal').modal('hide');
                 deleteClient(employeeToDeleteId);
@@ -188,10 +275,10 @@ $(function () {
                 }).fail(function () {
                     console.log('error');
                 });
-            }      
+            }
         }
     });
-       
+
     let Dttbl_staffTable = $('#staffTable').DataTable({
         lengthMenu: [[5, 10, 25, 50, 100, 1000], [5, 10, 25, 50, 100, 1000]],
         paging: true,
@@ -211,7 +298,7 @@ $(function () {
         columns: [
             { data: 'id', visible: false },
             {
-                data: 'name', title:'Name',
+                data: 'name', title: 'Name',
                 "render": function (data, type, row) {
                     var rtn = '<div class="d-flex align-items-center">';
                     rtn += '    <div class="">';
@@ -219,23 +306,23 @@ $(function () {
                     if (row.imageExtn != null) {
                         staffimg = '/Images/Employees/' + row.id + row.imageExtn + '?t=' + Date.now(); // Timestamp added to overcome browser cache issue
                     }
-                    rtn += '<img src="' + staffimg + '" class="rounded-circle" width="46" height="46" alt="StaffImage_' + row.id +'" asp-append-version="true" />';
+                    rtn += '<img src="' + staffimg + '" class="rounded-circle" width="46" height="46" alt="StaffImage_' + row.id + '" asp-append-version="true" />';
                     rtn += '    </div>';
                     rtn += '    <div class="ms-2">';
-                    rtn += '        <h6 class="mb-1 font-14">' + data +'</h6>';
-                    rtn += '        <p class="mb-0 font-13 text-secondary">Employee Id # ' + row.id +'</p>';
+                    rtn += '        <h6 class="mb-1 font-14">' + data + '</h6>';
+                    rtn += '        <p class="mb-0 font-13 text-secondary">Employee Id # ' + row.id + '</p>';
                     rtn += '    </div>';
                     rtn += '</div>';
                     return rtn;
                 }
             },
-            { data: 'formattedDOB', title:'Date Of Birth' },
-            { data: 'phone', title:'Phone'},
-            { data: 'genderDesc', title:'Gender' },
+            { data: 'formattedDOB', title: 'Date Of Birth' },
+            { data: 'phone', title: 'Phone' },
+            { data: 'gender', title: 'Gender' },
             {
                 data: 'employementTypeId', title: 'Employement Type',
                 "render": function (data, type, row) {
-                    console.log(data);
+                   // console.log(data);
                     var rtn = 'bg-danger';
                     if (data == 1) rtn = 'bg-warning';
                     else if (data == 0) rtn = 'bg-success';
@@ -243,8 +330,8 @@ $(function () {
                     else if (data == 3) rtn = 'bg-primary';
                     return '<div class="badge rounded-pill ' + rtn + ' w-100">' + row.employementTypeDesc + '</div>';;
                 }
-            },  
-            { data: 'formattedDOJ', title: 'Date Of Join' },       
+            },
+            { data: 'formattedDOJ', title: 'Date Of Join' },
             //{
             //    targets: -1,
             //    orderable: false,
@@ -269,15 +356,14 @@ $(function () {
                     var rtn = '<div class="d-flex order-actions text-center">' +
                         '<button type="button" class="btn btn-outline-primary mr-2" id="btnViewStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="' + data + '" data-name="' + row.name + '"><i class="fa fa-eye mr-2"></i></button>' +
                         '<button type="button" class="btn btn-outline-primary mr-2" id="btnEditStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="' + data + '" "><i class="fa fa-pencil mr-2"></i></button>' +
-                        '<button type="button" class="btn btn-outline-primary mr-2" id="btnEditStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" data-id="x" "><i class="fa fa-save mr-2"></i></button>' +
                         '<button type="button" class="btn btn-sm btn-outline-primary px-2 mx-2" data-id="' + data + '"  id="btnDeleteStaff" data-bs-toggle="modal" data-bs-target="#employee-profile-modal" ><i class="fa fa-trash mr-2"></i></button>' +
-               
-                   '</div>';
+
+                        '</div>';
                     return rtn;
                 }
 
             }
-       ],
+        ],
     });
     //function viewStaff(id) {
     //    //var id = element.getAttribute('data-id'); // Get the id from the data attribute of the clicked element
@@ -315,7 +401,7 @@ $(function () {
     //    });
     //}
 
-   
+
 
     let shiftDataToDisplayDate = new Date();
     let shiftDataToDisplayDateString = convertDateFormat(shiftDataToDisplayDate, 'yyyy-MM-dd');
@@ -459,7 +545,4 @@ $(function () {
     });
 
 
-   
-
 });
-

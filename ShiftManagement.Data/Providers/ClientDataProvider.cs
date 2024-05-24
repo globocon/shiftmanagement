@@ -20,7 +20,7 @@ namespace ShiftManagement.Data.Providers
 
     public class ClientDataProvider : IClientDataProvider
     {
-        private readonly ShiftDbContext _context;
+        private readonly ShiftDbContext _context;    
         public ClientDataProvider(ShiftDbContext context)
         {
             _context = context;
@@ -29,7 +29,7 @@ namespace ShiftManagement.Data.Providers
 
         public List<Clients> GetClientsList()
         {
-            return _context.Clients.Where(x => x.IsDeleted == false).OrderBy(x => x.Name).ToList();
+            return _context.Clients.Where(x => x.IsDeleted == false).OrderBy(x => x.DisplayName).ToList();
         }
 
         public Clients GetClientsById(int id)
@@ -71,7 +71,7 @@ namespace ShiftManagement.Data.Providers
 		{
 			int saveStatus = 0;
 			
-            var clientUpdate = _context.Clients.Where(x => x.Id == record.Id && x.Name == record.Name).SingleOrDefault();
+            var clientUpdate = _context.Clients.Where(x => x.Id == record.Id ).SingleOrDefault();
 			if (clientUpdate == null)
 			{
                 record.CreationDate = DateTime.Now;
@@ -80,10 +80,23 @@ namespace ShiftManagement.Data.Providers
 			}
 			else
 			{
-				clientUpdate.Emails = record.Emails;
+				clientUpdate.Salutation = record.Salutation;
+				clientUpdate.FirstName = record.FirstName;
+				clientUpdate.SecondName = record.SecondName;
+				clientUpdate.LastName = record.LastName;
+				clientUpdate.DisplayName = record.DisplayName;
+				clientUpdate.Gender = record.Gender;
+				clientUpdate.DateOfBirth = record.DateOfBirth;
 				clientUpdate.Address = record.Address;
+				clientUpdate.UnitOrApartmentNo = record.UnitOrApartmentNo;
+				clientUpdate.Mobile = record.Mobile;
 				clientUpdate.Phone = record.Phone;
-                saveStatus = 2;
+				clientUpdate.Email = record.Email;
+				clientUpdate.MaritalStatus = record.MaritalStatus;
+				clientUpdate.Nationality = record.Nationality;
+				clientUpdate.Languages = record.Languages;
+				clientUpdate.ClientStatus = record.ClientStatus;
+				saveStatus = 2;
 			}
 			_context.SaveChanges();
 			return saveStatus;
@@ -112,7 +125,7 @@ namespace ShiftManagement.Data.Providers
 
         public List<Clients> GetClientsListForCompanyAdmin(Guid UserID)
         {
-            return _context.Clients.Where(m => _context.USR_Users.Any(a => a.Id == UserID && a.CompanyId == m.CompanyId) && m.IsDeleted == false).OrderBy(x => x.Name).ToList();
+            return _context.Clients.Where(m => _context.USR_Users.Any(a => a.Id == UserID && a.CompanyId == m.CompanyId) && m.IsDeleted == false).OrderBy(x => x.DisplayName).ToList();
 
             //return _context.Clients.Where(x => x.IsDeleted == false && x.CompanyId.Value  ).OrderBy(x => x.Name).ToList();
         }

@@ -17,6 +17,26 @@
 						<i class='bx bx-dots-horizontal-rounded'></i>
 					</div>
 				</div>
+				<style>
+
+					.btn-custom-small {
+						padding: 2px 6px;
+						font-size: 12px;
+					}
+
+				</style>
+
+
+
+				<div class="d-flex justify-content-end my-2">
+
+					<button id="add-client-btn" class="btn btn-primary btn-custom-small">
+
+						<i class='bx bx-plus'></i> New Client
+
+					</button>
+
+				</div>
 			</div>
 			<div class="customers-list p-3 mb-3">
 
@@ -37,13 +57,13 @@
 								<img src=@clientimg class="rounded-circle" width="46" height="46" alt="clientImage_@cl.Id.ToString()" asp-append-version="true" />
 							</div>
 							<div class="ms-2">
-								<h6 class="mb-1 font-14">@cl.Name</h6>
-								<p class="mb-0 font-13 text-secondary">@cl.Emails</p>
+								<h6 class="mb-1 font-14">@cl.DisplayName</h6>
+								<p class="mb-0 font-13 text-secondary">@cl.Email</p>
 							</div>
 							<div class="list-inline d-flex customers-contacts ms-auto">
-								<a href="javascript:;" class="list-inline-item text-primary border-primary viewclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='fa fa-eye'></i></a>
-								<a href="javascript:;" class="list-inline-item text-primary border-primary editclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bxs-pencil'></i></a>
-								<a href="javascript:;" class="list-inline-item text-danger border-danger deleteclient" data-clientid="@cl.Id" data-clientname="@cl.Name"><i class='bx bx-trash'></i></a>
+								<a href="javascript:;" class="list-inline-item text-primary border-primary viewclient" data-clientid="@cl.Id" data-clientname="@cl.DisplayName"><i class='fa fa-eye'></i></a>
+								<a href="javascript:;" class="list-inline-item text-primary border-primary editclient" data-clientid="@cl.Id" data-clientname="@cl.DisplayName"><i class='bx bxs-pencil'></i></a>
+								<a href="javascript:;" class="list-inline-item text-danger border-danger deleteclient" data-clientid="@cl.Id" data-clientname="@cl.DisplayName"><i class='bx bx-trash'></i></a>
 							</div>
 						</div>
 					}
@@ -64,6 +84,20 @@
 					</div>
 					<div class="font-22 ms-auto">
 						<i class='bx bx-dots-horizontal-rounded'></i>
+					</div>
+					<style>
+
+						.btn-custom-small {
+							padding: 2px 6px;
+							font-size: 12px;
+						}
+
+					</style>
+
+					<div class="d-flex justify-content-end my-2">
+						<button id="add-staff-btn" class="btn btn-primary btn-custom-small">
+							<i class='bx bx-plus'></i> New Staff
+						</button>
 					</div>
 				</div>
 				<div class="table-responsive mt-4">

@@ -1,5 +1,8 @@
 ﻿
 using ShiftManagement.Data.Models;
+using System.Net;
+using System.Numerics;
+using System.Reflection;
 
 namespace ShiftManagement.Data.Providers
 {
@@ -52,6 +55,13 @@ namespace ShiftManagement.Data.Providers
 			}
 			else
 			{
+			
+	
+				EmployeeUpdate.Salutation = record.Salutation;
+				EmployeeUpdate.Email = record.Email;
+				EmployeeUpdate.Mobile = record.Mobile;
+				EmployeeUpdate.Gender = record.Gender;
+				EmployeeUpdate.Address = record.Address;
 				EmployeeUpdate.Name = record.Name;
 				EmployeeUpdate.Phone = record.Phone;
 				EmployeeUpdate.DOB = record.DOB;

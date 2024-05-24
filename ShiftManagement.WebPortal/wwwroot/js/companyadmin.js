@@ -111,8 +111,7 @@ $(function () {
                     Salutation.value = "Mr.";
                 }
 
-            });
-            
+            });            
             $('.btncancel').on('click', function (e) {
                 $('#client-profile-modal').modal('hide');
             });

@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel;
+
 namespace ShiftManagement.Data.Models
 {
 
@@ -28,6 +30,24 @@ namespace ShiftManagement.Data.Models
 		public bool IsDeleted { get; set; }
 		public string? ImageExtn { get; set; }
 		public Guid? CompanyId { get; set; }
+	
+    }
+
+    public class PublicClient
+    {
+        [DisplayName("Name")]
+        public string Name { get; set; }
+
+        [DisplayName("Email")]
+        public string? Emails { get; set; }
+
+        [DisplayName("Phone")]
+        public string Phone { get; set; }
+
+        [DisplayName("Address")]
+        public string? Address { get; set; }   
+
+        public Guid CompanyId { get; set; }
 
 	}
 }

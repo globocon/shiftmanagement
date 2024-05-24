@@ -14,7 +14,8 @@ namespace ShiftManagement.Data.Providers
 		
 		// Task<bool> SaveClientDetailsAsync(int id, string name);
 		int SaveOrUpdateClientDetails(Clients record);
-		
+
+        bool SaveNewPublicClientRequest(PublicClientEmployeeRequest pcer, out string msg);
 		
 	}
 
@@ -128,6 +129,31 @@ namespace ShiftManagement.Data.Providers
             return _context.Clients.Where(m => _context.USR_Users.Any(a => a.Id == UserID && a.CompanyId == m.CompanyId) && m.IsDeleted == false).OrderBy(x => x.DisplayName).ToList();
 
             //return _context.Clients.Where(x => x.IsDeleted == false && x.CompanyId.Value  ).OrderBy(x => x.Name).ToList();
+        }
+
+        public bool SaveNewPublicClientRequest(PublicClientEmployeeRequest pcer,out string msg)
+        {
+            bool rtn = false;
+            msg = "Unable to create request. Invalid details !!!.";
+            if (pcer != null)
+            {
+                var ex = _context.PublicClientEmployeeRequest.Where(x => x.Name.ToLower() == pcer.Name.ToLower()
+                    && x.RequestType == pcer.RequestType && x.CompanyId == pcer.CompanyId && x.Phone == pcer.Phone
+                    && x.RequestStatus == "PENDING").FirstOrDefault();
+
+                if(ex != null)
+                {
+                    msg = "Unable to create request. Another request already exists. !!!";
+                    return rtn;
+                }
+
+                _context.PublicClientEmployeeRequest.Add(pcer);
+                _context.SaveChanges(true);
+                msg = $"Request created successfully with id: {pcer.RequestId.ToString()}";
+                rtn = true;
+            }
+            
+            return rtn;
         }
     }
 }

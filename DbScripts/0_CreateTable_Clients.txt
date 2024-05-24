@@ -1,0 +1,52 @@
+USE [SHIFT_MANAGEMENT]
+GO
+drop table [Clients]
+/****** Object:  Table [dbo].[Clients]    Script Date: 5/23/2024 11:23:29 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Clients](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Salutation] [varchar](100) NULL,
+	[FirstName] [varchar](500) NOT NULL,
+	[SecondName] [varchar](500) NOT NULL,
+	[LastName] [varchar](500) NOT NULL,
+	[DisplayName] [varchar](500) NOT NULL,
+	[Gender] [varchar](150) NULL,
+	[DateOfBirth][date] Null,	
+	[Address] [varchar](max) NULL,
+	[UnitOrApartmentNo] varchar(100),
+	[Mobile] [varchar](100) NULL,
+	[Phone] [varchar](100) NULL,
+	[Email] [varchar](250) NULL,
+	[MaritalStatus][varchar](100) NULL,
+	[Nationality][Varchar](500) null,
+	[Languages][Varchar](500) Null,
+	[ClientStatus][bit] Default 0,
+	[Status] [int] NOT NULL,
+	[CreationDate] [date] NULL,
+	[DeletionDate] [date] NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[ImageExtn] [nvarchar](8) NULL,	
+	[CompanyId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK__Clients__3214EC07B58A3D82] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UQ_Client_Site_Name] UNIQUE NONCLUSTERED 
+(
+	[FirstName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Clients] ADD  CONSTRAINT [DF__Clients__Status__48CFD27E]  DEFAULT ((0)) FOR [Status]
+GO
+
+ALTER TABLE [dbo].[Clients] ADD  CONSTRAINT [DF_Clients_IsDeleted]  DEFAULT ((0)) FOR [IsDeleted]
+GO
+
+

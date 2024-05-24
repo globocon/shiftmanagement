@@ -6,10 +6,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ShiftManagement.Data.Models
 {
     public class Employees
-    {
+    {	
+	
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string? Phone { get; set; }
+		public string? Salutation { get; set; }
+		public string Name { get; set; }
+		
+		public string Email { get; set; }
+		public string Mobile { get; set; }
+		public string? Phone { get; set; }
         public string? Gender { get; set; }
         public int EmployementTypeId { get; set; }
         [DataType(DataType.Date)]
@@ -18,7 +23,8 @@ namespace ShiftManagement.Data.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DOJ { get; set; }
-        public DateTime? CreatedDateTime { get; set; }
+		public string? Address { get; set; }
+		public DateTime? CreatedDateTime { get; set; }
         public string? ImageExtn { get; set; }
 
         public Guid? CompanyId { get; set; }

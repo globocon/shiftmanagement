@@ -1,0 +1,38 @@
+USE [SHIFT_MANAGEMENT]
+GO
+
+/****** Object:  Table [dbo].[Employees]    Script Date: 5/24/2024 1:34:49 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+drop table employees
+CREATE TABLE [dbo].[Employees](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Salutation] [varchar](100) NULL,
+	[Name] [nvarchar](500) NOT NULL,
+	[Email] [nvarchar](500) NOT NULL,
+	[Mobile] [nvarchar](20) NULL,
+	[Phone] [nvarchar](20) NULL,
+	[Gender] [nvarchar](1) NULL,
+	[DOB] [date] NULL,
+	[EmployementTypeId] [int] NULL,
+	[DOJ] [date] NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[CreatedDateTime] [datetime] NULL,
+	[ImageExtn] [nvarchar](8) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DeletionDate] [datetime] NULL,
+	[CompanyId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Employees] ADD  DEFAULT ((0)) FOR [IsDeleted]
+GO
+
+

@@ -1,5 +1,8 @@
 ﻿
 using ShiftManagement.Data.Models;
+using System.Net;
+using System.Numerics;
+using System.Reflection;
 
 namespace ShiftManagement.Data.Providers
 {
@@ -43,24 +46,31 @@ namespace ShiftManagement.Data.Providers
         {
             int saveStatus = 0;
 
-            var EmployeeUpdate = _context.Employees.Where(x => x.Id == record.Id).SingleOrDefault();
-            if (EmployeeUpdate == null)
-            {
-                record.CreatedDateTime = DateTime.Now;
-                _context.Add(record);
-                saveStatus = 1;
-            }
-            else
-            {
-                EmployeeUpdate.Name = record.Name;
-                EmployeeUpdate.Phone = record.Phone;
-                EmployeeUpdate.DOB = record.DOB;
-                EmployeeUpdate.DOJ = record.DOJ;
-                saveStatus = 2;
-            }
-            _context.SaveChanges();
-            return saveStatus;
-        }
+			var EmployeeUpdate = _context.Employees.Where(x => x.Id == record.Id ).SingleOrDefault();
+			if (EmployeeUpdate == null)
+			{
+				record.CreatedDateTime = DateTime.Now;
+				_context.Add(record);
+				saveStatus = 1;
+			}
+			else
+			{
+			
+	
+				EmployeeUpdate.Salutation = record.Salutation;
+				EmployeeUpdate.Email = record.Email;
+				EmployeeUpdate.Mobile = record.Mobile;
+				EmployeeUpdate.Gender = record.Gender;
+				EmployeeUpdate.Address = record.Address;
+				EmployeeUpdate.Name = record.Name;
+				EmployeeUpdate.Phone = record.Phone;
+				EmployeeUpdate.DOB = record.DOB;
+				EmployeeUpdate.DOJ = record.DOJ;
+				saveStatus = 2;
+			}
+			_context.SaveChanges();
+			return saveStatus;
+		}
 
 
         public void DeleteEmployeeDetails(int id)

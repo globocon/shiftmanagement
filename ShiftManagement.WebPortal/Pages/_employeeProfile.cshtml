@@ -4,7 +4,6 @@
 
 }
 
-
 <div class="row">
 	<div class="col-lg-4">
 		<div class="card">
@@ -52,33 +51,136 @@
 			</div>
 		</div>
 	</div>
+	<style>
+		.form-control::placeholder {
+			color: #6c757d; /* Bootstrap's default placeholder color */
+			opacity: 1; /* Firefox's default placeholder opacity */
+			font-size: 14px;
+		}
+
+		.fontSize {
+			font-size: 14px; /* Adjust the font size as needed */
+		}
+
+		.col-form-label {
+			white-space: nowrap;
+		}
+	</style>
 	<div class="col-lg-8">
 		<div class="card">
 			<div class="card-body">
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Full Name</h6>
+						<h6 class="mb-0">Name:</h6>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Name" class="form-control" value="@Model.Name" />
+						<input type="checkbox" class="form-check-input" id="useSalutationStaff" checked="checked" />
+						<label class="form-check-label" for="useSalutationStaff">Use Salutation</label>
+						<div class="col-sm-3">
+							<select class="form-select fontSize" id="SalutationStaff">
+
+								@if (Model.Salutation != null && Model.Salutation.Any())
+								{
+
+									<option>@Model.Salutation</option>
+
+								}
+								else
+								{
+									<option selected>Mr.</option>
+									<option>Mrs.</option>
+									<option>Miss</option>
+									<option>Ms.</option>
+									<option>Mx.</option>
+									<option>Dr.</option>
+									<option>Prof.</option>
+								}
+							</select>
+
+						</div>
+					</div>
+					
+				</div>
+				<div class="row mb-3">
+					<label for="Name" class="col-sm-3 col-form-label"></label>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.Name" class="form-control" value="@Model.Name" placeholder="Enter Name" />
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">Phone</h6>
+
+						<label for="Email" class="col-sm-3 col-form-label">Email:</label>
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" />
+						<input asp-for="@Model.Email" class="form-control" value="@Model.Email" placeholder="Enter Email" />
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm-3">
-						<h6 class="mb-0">DOB</h6>
+
+						<label for="Contact" class="col-sm-3 col-form-label">Contact:</label>
+					</div>
+					<div class="col-sm-3 text-secondary">
+
+						<input asp-for="@Model.Mobile" class="form-control" value="@Model.Mobile" placeholder="Enter Mobile No" />
+					</div>
+					<div class="col-sm-3 text-secondary">
+
+						<input asp-for="@Model.Phone" class="form-control" value="@Model.Phone" placeholder="Enter Phone No" />
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+						<label for="Gender" class="col-sm-3 col-form-label">Gender:</label>
+					</div>
+					<div class="col-sm-3">
+						<select class=" form-select fontSize" id="Gender">
+
+							@if (Model.Gender != null && Model.Gender.Any())
+							{
+
+								<option>@Model.Gender</option>
+
+							}
+							else
+							{
+								<option>Male</option>
+								<option>Female</option>
+								<option>Other</option>
+							}
+						</select>
+					</div>
+					<div class="col-sm-3">
+						<label for="dobPicker" class="col-sm-3 col-form-label">Date of Birth</label>
+					</div>
+					<div class="col-sm-3">
+						<input asp-for="@Model.DOB" class="form-control" value="@Model.DOJ" />
+					</div>
+
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+
+						<label for="Address" class="col-sm-3 col-form-label">Employment Type:</label>
+
 					</div>
 					<div class="col-sm-9 text-secondary">
-						<input asp-for="@Model.DOB" class="form-control" value="@Model.DOB" />
+						<input asp-for="@Model.EmployementTypeId" class="form-control" value="@Model.EmployementTypeId" placeholder="Enter EmployementT ype" />
 					</div>
-				</div>				
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm-3">
+
+						<label for="Address" class="col-sm-3 col-form-label">Address:</label>
+
+					</div>
+					<div class="col-sm-9 text-secondary">
+						<input asp-for="@Model.Address" class="form-control" value="@Model.Address" placeholder="Enter Address" />
+					</div>
+				</div>
+	
+							
 				<div class="row mb-3">
 					<div class="col-sm-3">
 						<h6 class="mb-0">Date of Joining</h6>
@@ -87,9 +189,11 @@
 						<input asp-for="@Model.DOJ" class="form-control" value="@Model.DOJ" />
 					</div>
 				</div>
+		
 				<div class="row">
 					<div class="col-sm-3"></div>
-					<div class="col-sm-9 text-secondary">
+					<div class="col-sm-9 text-secondary  text-end">
+						<input id="btn_Cancel" type="button" class="btn btn-primary px-4 btncancelEmployee" value="Cancel" />
 						<input id="btn_saveemployee" type="button" class="btn btn-primary px-4 btnsave_employee"  value="Save Changes" />
 				
 					</div>

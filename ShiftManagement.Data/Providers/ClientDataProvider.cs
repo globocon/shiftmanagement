@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShiftManagement.Data.Models;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace ShiftManagement.Data.Providers
 {
@@ -8,11 +9,12 @@ namespace ShiftManagement.Data.Providers
     {        
         public List<Clients> GetClientsList();
         public Clients GetClientsById(int id);
-        void DeleteClientDetails(int id);
+	
+		void DeleteClientDetails(int id);
         public List<Clients> GetClientsListForCompanyAdmin(Guid UserID);
 
 		
-		// Task<bool> SaveClientDetailsAsync(int id, string name);
+	
 		int SaveOrUpdateClientDetails(Clients record);
 
         bool SaveNewPublicClientRequest(PublicClientEmployeeRequest pcer, out string msg);
@@ -30,45 +32,16 @@ namespace ShiftManagement.Data.Providers
 
         public List<Clients> GetClientsList()
         {
-            return _context.Clients.Where(x => x.IsDeleted == false).OrderBy(x => x.DisplayName).ToList();
-        }
+            return _context.Clients.Where(x => x.IsDeleted == false).OrderByDescending(x => x.Id).ToList();
+		}
 
         public Clients GetClientsById(int id)
         {
             return _context.Clients.Where(x => x.IsDeleted == false && x.Id == id).SingleOrDefault();
-        }
-        //public async Task<bool> SaveClientDetailsAsync(int id, string name)
-        //{
-        //    try
-        //    {
-        //        // Retrieve the client from the database
-        //        var client = await _context.Clients.FindAsync(id);
-
-        //        if (client != null)
-        //        {
-        //            // Update the client name
-        //            client.Name = name;
-
-        //            // Save changes to the database
-        //            await _context.SaveChangesAsync();
-
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            // Client not found
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception
-
-        //        Console.WriteLine($"Error saving client details: {ex.Message}");
-        //        return false;
-        //    }
-        //}
-		public int SaveOrUpdateClientDetails(Clients record)
+		}
+	
+	
+	public int SaveOrUpdateClientDetails(Clients record)
 		{
 			int saveStatus = 0;
 			

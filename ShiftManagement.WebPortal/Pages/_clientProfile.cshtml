@@ -90,7 +90,6 @@
 								{
 									<option selected>Mr.</option>
 									<option>Mrs.</option>
-									<option>Miss</option>
 									<option>Ms.</option>
 									<option>Mx.</option>
 									<option>Dr.</option>
@@ -145,10 +144,10 @@
 				</select>
 					</div>
 					<div class="col-sm-3">
-					<label for="dobPicker" class="col-sm-3 col-form-label">Date of Birth</label>
+						<label for="DateOfBirth" class="col-sm-3 col-form-label">Date of Birth</label>
 					</div>
 					<div class="col-sm-3">
-						<input type="date" class="form-control" id="dobPicker" placeholder="Pick a date">
+						<input asp-for="@Model.DateOfBirth" class="form-control" id="DateOfBirth" value="@Model.DateOfBirth" />
 					</div>
 					
 				</div>

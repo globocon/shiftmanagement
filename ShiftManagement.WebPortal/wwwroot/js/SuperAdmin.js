@@ -25,7 +25,7 @@ $(function () {
                     alert_error(data.message);
                 }
             }).fail(function () {
-                //showStatusNotification(false, 'Something went wrong');
+                console.log('error');
             });
         }
     });
@@ -97,6 +97,7 @@ $(function () {
 
     $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
         $('#inpClientidDeleteConfirmModal').val('');
+        $('#inpClientNameDeleteConfirmModal').val('');
     });
 
     function deleteClient(clientToDeleteId) {
@@ -107,17 +108,17 @@ $(function () {
             headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
         }).done(function (data) {
             if (data.success) {
-                //Dttbl_role_settings_MR.ajax.reload();
+                
                 showSuccessModalSmall("Delete Client", data.message);
             }
             else {
-                showErrorModalSmall("Delete Client", data.message);
+                alert_success_with_refresh_window(data.message);
             }
         }).fail(function () {
             console.log('error');
         });
     }
-
+  
     function deleteCompany(companyId) {
         $.ajax({
             url: '/SAdminIndex?handler=DeleteCompany',

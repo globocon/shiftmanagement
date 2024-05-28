@@ -25,34 +25,36 @@ $(function () {
         const clientId = btn.data('clientid');
         const clientName = btn.data('clientname');
         $('#inpClientidDeleteConfirmModal').val(clientId);
+        $('#inpClientNameDeleteConfirmModal').val(clientName);
         $('#msgDeleteConfirmModal').html('Are you sure to delete client "' + clientName + '" ?');
         $('#DeleteConfirmModal').modal('show');
     });
     $('#btnDeleteConfirmModal').on('click', function () {
         var clientToDeleteId = $('#inpClientidDeleteConfirmModal').val();
+        var clientToDeleteName = $('#inpClientNameDeleteConfirmModal').val();
         $('#DeleteConfirmModal').modal('hide');
-        deleteClient(clientToDeleteId);
+        deleteClient(clientToDeleteId, clientToDeleteName);
     });
     // alert('client ' + clientName + ' marked for deletion !!!');
 
 
     $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
         $('#inpClientidDeleteConfirmModal').val('');
+        $('#inpClientNameDeleteConfirmModal').val('');
     });
 
-    function deleteClient(clientToDeleteId) {
+    function deleteClient(clientToDeleteId, clientToDeleteName) {
         $.ajax({
             url: '/CAdminIndex?handler=DeleteClientDetails',
-            data: { id: clientToDeleteId },
+            data: { id: clientToDeleteId, name: clientToDeleteName },
             type: 'POST',
             headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
         }).done(function (data) {
             if (data.success) {
-                //Dttbl_role_settings_MR.ajax.reload();
-                showSuccessModalSmall("Delete Client", data.message);
-            }
-            else {
-                showErrorModalSmall("Delete Client", data.message);
+                $('#add-new-client-modal').modal('hide');
+                alert_success_with_refresh_window(data.message);
+            } else {
+                alert_error(data.message);
             }
         }).fail(function () {
             console.log('error');
@@ -80,10 +82,17 @@ $(function () {
 
     $('#client-profile-modal').on('shown.bs.modal', function (event) {
         $('#div_client_settings').html('');
-        var csnme = $('#hinp_client_profile_modal_clientname').val();
+        var csname = $('#hinp_client_profile_modal_clientname').val();
         var csid = $('#hinp_client_profile_modal_clientid').val();
-        $('#mdl_client_name').text(csnme)
+        if (csname == '') {
 
+            csname = "Add New Client";
+            $('#mdl_client_name').text(csname)
+        }
+        else {
+            csname = "View / Edit Settings for : " + csname;
+            $('#mdl_client_name').text(csname)
+        }
         $('#div_client_profile_settings').load('/CAdminIndex?handler=ClientProfileSettings&clientId=' + csid, function () {
             // This function will be executed after the content is loaded
             
@@ -111,7 +120,34 @@ $(function () {
                     Salutation.value = "Mr.";
                 }
 
-            });            
+            });    
+
+            // Code to update the display name as per name text boxes
+      
+                // Function to update display name based on input values
+                function updateDisplayName() {
+                    var firstName = $('#FirstName').val();
+                    var middleName = $('#SecondName').val();
+                    var lastName = $('#LastName').val();
+
+                    // Concatenate first, middle, and last names with spaces
+                    var displayName = firstName + (middleName ? ' ' + middleName : '') + (lastName ? ' ' + lastName : '');
+
+                    // Update display name textbox
+                    $('#DisplayName').val(displayName);
+                }
+
+                // Call updateDisplayName function when any of the name inputs change
+            $('#FirstName, #SecondName, #LastName').on('input', function () {
+                    updateDisplayName();
+                });
+
+                // Allow the user to edit the display name directly
+                $('#DisplayName').on('input', function () {
+                  
+                });
+            
+
             $('.btncancel').on('click', function (e) {
                 $('#client-profile-modal').modal('hide');
             });
@@ -124,7 +160,7 @@ $(function () {
                     'LastName': $('#LastName').val(),
                     'DisplayName': $('#DisplayName').val(),
                     'Gender': $('#Gender').val(),
-                    'DateOfBirth': $('#dobPicker').val(),
+                    'DateOfBirth': $('#DateOfBirth').val(),
                     'address': $('#Address').val(),
                     'UnitOrApartmentNo': $('#UnitOrApartmentNo').val(),
                     'Mobile': $('#Mobile').val(),
@@ -143,12 +179,13 @@ $(function () {
                     headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                 }).done(function (data) {
                     if (data.success) {
-                        alert(data.message);
-                        // showSuccessModalSmall("Update Client", data.message);
-
+                        
+                        $('#client-profile-modal').modal('hide');
+                        alert_success_with_refresh_window(data.message);
+                        
                     }
                     else {
-                       // showErrorModalSmall("Update Client", data.message);
+                        alert(data.message);
                     }
                 }).fail(function () {
                     console.log('error');
@@ -156,8 +193,7 @@ $(function () {
             });
         });
     });
-
-
+   
     $('#employee-profile-modal').on('shown.bs.modal', function (event) {
         $('#div_employee_settings').html('');
 
@@ -233,10 +269,11 @@ $(function () {
                         }).done(function (data) {
                             if (data.success) {
 
-                                showSuccessModalSmall("Update Employee", data.message);
+                                $('#employee-profile-modal').modal('hide');
+                                alert_success_with_refresh_window(data.message);
                             }
                             else {
-                                showErrorModalSmall("Update Employee", data.message);
+                                alert(data.message);
                             }
                         }).fail(function () {
                             console.log('error');
@@ -244,32 +281,34 @@ $(function () {
                     });
 
                 });
-            //}
+         
 
             $('#btnDeleteConfirmModal').on('click', function () {
 
                 var employeeToDeleteId = $('#inpClientidDeleteConfirmModal').val();
+                var employeeToDeleteName = $('#inpClientNameDeleteConfirmModal').val();
                 $('#DeleteConfirmModal').modal('hide');
-                deleteClient(employeeToDeleteId);
+                deleteClient(employeeToDeleteId, employeeToDeleteName);
             });
 
             $("#DeleteConfirmModal").on("hidden.bs.modal", function () {
                 $('#inpClientidDeleteConfirmModal').val('');
+                $('#inpClientNameDeleteConfirmModal').val('');
             });
 
-            function deleteClient(employeeToDeleteId) {
+            function deleteClient(employeeToDeleteId, employeeToDeleteName) {
                 $.ajax({
                     url: '/CAdminIndex?handler=DeleteEmployeeDetails',
-                    data: { id: employeeToDeleteId },
+                    data: { id: employeeToDeleteId, name: employeeToDeleteName },
                     type: 'POST',
                     headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                 }).done(function (data) {
                     if (data.success) {
-                        //Dttbl_role_settings_MR.ajax.reload();
-                        showSuccessModalSmall("Delete Employee", data.message);
+                       
+                        alert_success_with_refresh_window(data.message);
                     }
                     else {
-                        showErrorModalSmall("Delete Employee", data.message);
+                        alert(data.message);
                     }
                 }).fail(function () {
                     console.log('error');

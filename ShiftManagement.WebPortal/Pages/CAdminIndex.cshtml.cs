@@ -62,7 +62,7 @@ namespace ShiftManagement.WebPortal.Pages
         return new JsonResult(ShiftData);
     }
 
-		public JsonResult OnPostDeleteClientDetails(int id)
+		public JsonResult OnPostDeleteClientDetails(int id,string name)
 		{
 			var success = false;
 			var message = "Unable to delete client. Invalid client id.";
@@ -70,8 +70,8 @@ namespace ShiftManagement.WebPortal.Pages
 			{
 
 				_clientDataProvider.DeleteClientDetails(id);
-
-				message = "client '" + id + "' marked for deletion !!!";
+				
+				message = "client '" + name + "' marked for deletion !!!";
 				success = true;
 				ClientsList = _clientDataProvider.GetClientsList();
 			}
@@ -92,11 +92,11 @@ namespace ShiftManagement.WebPortal.Pages
 
 				if (success == 1)
 				{
-					return new JsonResult(new { success = true, message = "Client details updated." });
+					return new JsonResult(new { success = true, message = "Client details added." });
 				}
 				else if (success == 2)
 				{
-					return new JsonResult(new { success = false, message = "Client details added." });
+					return new JsonResult(new { success = true, message = "Client details updated." });
 				}
 				else
 				{
@@ -118,7 +118,7 @@ namespace ShiftManagement.WebPortal.Pages
 
 				_employeeDataProvider.DeleteEmployeeDetails(id);
 
-				message = "Employee '" + id + "' marked for deletion !!!";
+				message = "Employee marked for deletion !!!";
 				success = true;
 
 			}
@@ -139,11 +139,11 @@ namespace ShiftManagement.WebPortal.Pages
 
 				if (success == 1)
 				{
-					return new JsonResult(new { success = true, message = "Employee details updated." });
+					return new JsonResult(new { success = true, message = "Employee details added." });
 				}
 				else if (success == 2)
 				{
-					return new JsonResult(new { success = false, message = "Employee details added." });
+					return new JsonResult(new { success = true, message = "Employee details updated." });
 				}
 				else
 				{
@@ -153,7 +153,7 @@ namespace ShiftManagement.WebPortal.Pages
 			catch (Exception ex)
 			{
 				// Log the exception
-				return new JsonResult(new { success = false, message = "An error occurred while updating client details." });
+				return new JsonResult(new { success = false, message = "An error occurred while updating Employee details." });
 			}
 		}
 		public PartialViewResult OnGetEmployeeProfileSettings(int employeeId)
